@@ -113,10 +113,9 @@ class Place(models.Model):
     city = models.ForeignKey(City, verbose_name='Город', on_delete=models.CASCADE, blank=True, null=True)
     district = models.ForeignKey(District, on_delete=models.CASCADE, verbose_name='Район')
     season = models.ForeignKey(Season, on_delete=models.CASCADE, verbose_name='Сезон')
-    tag = models.ManyToManyField(Tag, verbose_name='Тэги', balnk=True)
+    tag = models.ManyToManyField(Tag, verbose_name='Тэги', blank=True)
     type = models.ForeignKey(TypePlace, verbose_name='Тип места', on_delete=models.CASCADE)
     contact = models.ForeignKey(Contact, on_delete=models.SET_NULL, verbose_name='Контакты', null=True, blank=True)
     time = models.ForeignKey(TimeOfWork, on_delete=models.SET_NULL, verbose_name='Время работы', null=True, blank=True)
     image = models.ManyToManyField(Image, verbose_name='Изображения',  blank=True)
 
-# Избранные места
