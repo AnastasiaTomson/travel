@@ -3,8 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <title>Главная</title>
+    <link rel="stylesheet/less" type="text/css" href="/static/fonts/static/font.css">
+    <link rel="stylesheet/less" type="text/css" href="/static/css/front/style.less">
+    <script src="/static/js/less.js"></script>
 </head>
 <body>
+<section class="slider">
+    <section class="navbar max-content margin">
+        <a href=""><img src="/static/img/front/logo.png" alt=""></a>
+        <div class="menu">
+            <a href="" class="active">Главная</a>
+            <a href="">Туры</a>
+            <p onclick="ShowAuthorization()">Личный кабинет</p>
+        </div>
+    </section>
+    <div class="slide"></div>
+</section>
+<section class="content">
+    <div class="personal-trip-form max-content">
+        <h3>Создайте свой индивидуальный тур</h3>
+        <form action="">
+            <div class="custom-input">
+                <input type="text" value="Абхазия">
+            </div>
+            <input type="text" value="Лето">
+            <button>Найти</button>
+        </form>
+    </div>
+    <div class="popular-trip max-content">
+        <h4>Популярные туры</h4>
+        <div>
+            {% for trip in trips %}
+                {#                {{ trip }}#}
+            {% endfor %}
 
+        </div>
+    </div>
+    {# Блок для чего-то #}
+    <div></div>
+    <div class="gallery">
+
+    </div>
+</section>
+<section class="feedback">
+    <form action="">
+        <div></div>
+    </form>
+</section>
+<section class="footer">
+
+</section>
+{% block modalwindow %}
+    <section class="modal-block">
+        <div class="modal-window login-form">
+            <h4>Аутентификация</h4>
+            <form action="" method="post">
+                {% csrf_token %}
+                <label for="">
+                    <input type="text" name="login" placeholder="Логин">
+                </label>
+                <label for="" class="password">
+                    <input type="password" name="password" placeholder="Пароль">
+                </label>
+                <button>Войти</button>
+            </form>
+            <a href="">Зарегистрироваться</a>
+        </div>
+    </section>
+{% endblock %}
+
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/front/authorization.js"></script>
 </body>
 </html>

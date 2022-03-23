@@ -7,12 +7,12 @@ class CustomUser(AbstractBaseUser):
         verbose_name = 'Пользователи'
         verbose_name_plural = 'Пользователи'
 
+    username = models.CharField(max_length=35, unique=True, verbose_name='Логин')
     name = models.CharField(max_length=255, verbose_name="Имя")
     last_name = models.CharField(max_length=255, blank=True, null=True, verbose_name="Фамилия")
     fathername = models.CharField(max_length=255, blank=True, null=True, verbose_name="Отчество")
     email = models.EmailField(blank=True, null=True, verbose_name="Эл. почта")
     last_login = models.DateTimeField(auto_now=True, verbose_name='Последнее время входа')
-    username = models.CharField(max_length=35, unique=True)
 
     USERNAME_FIELD = 'username'
 
