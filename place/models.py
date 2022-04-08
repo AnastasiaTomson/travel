@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.html import mark_safe
 
 
 # Картинки
@@ -11,6 +12,9 @@ class Image(models.Model):
     title = models.CharField(max_length=255, verbose_name='Название')
     description = models.TextField(verbose_name='Описание', blank=True, null=True)
 
+    def __str__(self):
+        return self.title
+
 
 # Теги
 class Tag(models.Model):
@@ -19,6 +23,9 @@ class Tag(models.Model):
         verbose_name_plural = 'Тег'
 
     title = models.CharField(max_length=255, verbose_name='Название')
+
+    def __str__(self):
+        return self.title
 
 
 # Города
@@ -29,6 +36,9 @@ class City(models.Model):
 
     title = models.CharField(max_length=255, verbose_name='Название')
     description = models.TextField(verbose_name='Описание', blank=True, null=True)
+
+    def __str__(self):
+        return self.title
 
 
 # Области
@@ -64,6 +74,9 @@ class TypePlace(models.Model):
 
     title = models.CharField(max_length=255, verbose_name='Название')
 
+    def __str__(self):
+        return self.title
+
 
 # Контакты
 class Contact(models.Model):
@@ -81,6 +94,9 @@ class Contact(models.Model):
     phone3 = models.TextField(verbose_name='Доп. телефон', blank=True, null=True)
     email = models.EmailField(verbose_name='Почта', blank=True, null=True)
 
+    def __str__(self):
+        return self.phone
+
 
 # Время работы
 class TimeOfWork(models.Model):
@@ -88,33 +104,21 @@ class TimeOfWork(models.Model):
         verbose_name = 'Время работы'
         verbose_name_plural = 'Время работы'
 
-    monday_start = models.TimeField(blank=True, null=True, verbose_name='Начало приема заказов в понедельник')
-    monday_end = models.TimeField(blank=True, null=True, verbose_name='Окончание приема заказов в понедельник')
-    monday_is_day_off = models.BooleanField(default=False, verbose_name='Понедельник выходной?')
+    weekday = models.CharField(max_length=50, choices=[('1', 'Понедельник'),
+                                                       ('2', 'Вторник'),
+                                                       ('3', 'Среда'),
+                                                       ('4', 'Четверг'),
+                                                       ('5', 'Пятница'),
+                                                       ('6', 'Суббота'),
+                                                       ('7', 'Воскресенье')],
+                               verbose_name='День недели')
 
-    tuesday_start = models.TimeField(blank=True, null=True, verbose_name='Начало приема заказов во вторник')
-    tuesday_end = models.TimeField(blank=True, null=True, verbose_name='Окончание приема заказов во вторник')
-    tuesday_is_day_off = models.BooleanField(default=False, verbose_name='Вторник выходной?')
+    start_time = models.TimeField(blank=True, null=True, verbose_name='Начало работы')
+    end_time = models.TimeField(blank=True, null=True, verbose_name='Окончание работы')
+    place = models.ForeignKey('Place', on_delete=models.CASCADE, verbose_name='Место')
 
-    wednesday_start = models.TimeField(blank=True, null=True, verbose_name='Начало приема заказов в среду')
-    wednesday_end = models.TimeField(blank=True, null=True, verbose_name='Окончание приема заказов в среду')
-    wednesday_is_day_off = models.BooleanField(default=False, verbose_name='Среда выходной?')
-
-    thursday_start = models.TimeField(blank=True, null=True, verbose_name='Начало приема заказов в четверг')
-    thursday_end = models.TimeField(blank=True, null=True, verbose_name='Окончание приема заказов в четверг')
-    thursday_is_day_off = models.BooleanField(default=False, verbose_name='Четверг выходной?')
-
-    friday_start = models.TimeField(blank=True, null=True, verbose_name='Начало приема заказов в пятницу')
-    friday_end = models.TimeField(blank=True, null=True, verbose_name='Окончание приема заказов в пятницу')
-    friday_is_day_off = models.BooleanField(default=False, verbose_name='Пятница выходной?')
-
-    saturday_start = models.TimeField(blank=True, null=True, verbose_name='Начало приема заказов в субботу')
-    saturday_end = models.TimeField(blank=True, null=True, verbose_name='Окончание приема заказов в субботу')
-    saturday_is_day_off = models.BooleanField(default=False, verbose_name='Суббота выходной?')
-
-    sunday_start = models.TimeField(blank=True, null=True, verbose_name='Начало приема заказов в воскресенье')
-    sunday_end = models.TimeField(blank=True, null=True, verbose_name='Окончание приема заказов в воскресенье')
-    sunday_is_day_off = models.BooleanField(default=False, verbose_name='Воскресенье выходной?')
+    def __str__(self):
+        return f"{self.place} - {self.get_weekday_display()}"
 
 
 # Место
@@ -131,8 +135,10 @@ class Place(models.Model):
     city = models.ForeignKey(City, verbose_name='Город', on_delete=models.CASCADE, blank=True, null=True)
     district = models.ForeignKey(District, on_delete=models.CASCADE, verbose_name='Район')
     season = models.ForeignKey(Season, on_delete=models.CASCADE, verbose_name='Сезон')
-    tag = models.ManyToManyField(Tag, verbose_name='Тэги', blank=True)
+    tag = models.ManyToManyField(Tag, verbose_name='Теги', blank=True)
     type = models.ForeignKey(TypePlace, verbose_name='Тип места', on_delete=models.CASCADE)
     contact = models.ForeignKey(Contact, on_delete=models.SET_NULL, verbose_name='Контакты', null=True, blank=True)
-    time = models.ForeignKey(TimeOfWork, on_delete=models.SET_NULL, verbose_name='Время работы', null=True, blank=True)
     image = models.ManyToManyField(Image, verbose_name='Изображения', blank=True)
+
+    def __str__(self):
+        return self.title

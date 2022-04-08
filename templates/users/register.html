@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация пользователя</title>
+    <link rel="stylesheet/less" type="text/css" href="/static/fonts/static/font.css">
+    <link rel="stylesheet/less" type="text/css" href="/static/css/front/style.less">
+    <script src="/static/js/less.js"></script>
+</head>
+<body>
+<section class="register-form">
+    <div class="register-block">
+        <h4>Регистрация</h4>
+        <form action="{% url 'register' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="{{ form.image.id_for_label }}">
+                <p>{{ form.errors }}</p>
+                <div id="image"></div>
+                <img src="/static/img/front/close.png" alt="" class="close">
+                {{ form.image }}
+            </label>
+            <label for="{{ form.email.id_for_label }}">
+                {{ form.email }}
+            </label>
+            <label for="{{ form.password1.id_for_label }}" class="password">
+                {{ form.password1 }}
+            </label>
+            <label for="{{ form.password2.id_for_label }}" class="password">
+                {{ form.password2 }}
+            </label>
+            <label for="{{ form.last_name.id_for_label }}">
+                {{ form.last_name }}
+            </label>
+            <label for="{{ form.name.id_for_label }}">
+                {{ form.name }}
+            </label>
+            <label for="{{ form.fathername.id_for_label }}">
+                {{ form.fathername }}
+            </label>
+            <button>Сохранить</button>
+        </form>
+    </div>
+</section>
+<script src="/static/js/jquery.min.js"></script>
+<script>
+    // Изменение картинки - для кастомизированного инпута изображения
+    var _URL = window.URL || window.webkitURL;
+
+    // Изменение картинки - для кастомизированного инпута изображения
+    function ChangeImage(obj) {
+        let input = obj;
+        var img = new Image();
+        img.onload = function () {
+            $('#image').attr('style', `background-image: url("${img.src}")`)
+        }
+        img.src = _URL.createObjectURL(input.files[0]);
+    }
+
+</script>
+</body>
+</html>

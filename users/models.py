@@ -1,21 +1,81 @@
 from django.db import models
-from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import (
+    BaseUserManager, AbstractBaseUser
+)
 
 
-class CustomUser(AbstractBaseUser):
-    class Meta:
-        verbose_name = 'Пользователи'
-        verbose_name_plural = 'Пользователи'
+class MyUserManager(BaseUserManager):
+    def create_user(self, email, password=None):
+        """
+        Creates and saves a User with the given email, date of
+        birth and password.
+        """
+        if not email:
+            raise ValueError('Users must have an email address')
 
-    username = models.CharField(max_length=35, unique=True, verbose_name='Логин')
-    name = models.CharField(max_length=255, verbose_name="Имя")
+        user = self.model(
+            email=self.normalize_email(email),
+        )
+
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password):
+        """
+        Creates and saves a superuser with the given email, date of
+        birth and password.
+        """
+        user = self.create_user(email,
+                                password=password,
+                                )
+        user.is_admin = True
+        user.save(using=self._db)
+        return user
+
+
+class MyUser(AbstractBaseUser):
+    email = models.EmailField(
+        verbose_name='E-mail',
+        max_length=255,
+        unique=True,
+    )
+    name = models.CharField(max_length=255, blank=True, null=True, verbose_name="Имя")
     last_name = models.CharField(max_length=255, blank=True, null=True, verbose_name="Фамилия")
     fathername = models.CharField(max_length=255, blank=True, null=True, verbose_name="Отчество")
-    email = models.EmailField(blank=True, null=True, verbose_name="Эл. почта")
-    last_login = models.DateTimeField(auto_now=True, verbose_name='Последнее время входа')
+    image = models.FileField(upload_to='user/', verbose_name='Аватар')
+    is_active = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=False)
 
-    USERNAME_FIELD = 'username'
+    objects = MyUserManager()
+
+    USERNAME_FIELD = 'email'
+
+    # REQUIRED_FIELDS = []
+
+    def get_full_name(self):
+        # The user is identified by their email address
+        return self.email
+
+    def get_short_name(self):
+        # The user is identified by their email address
+        return self.email
+
+    def __str__(self):  # __unicode__ on Python 2
+        return self.email
+
+    def has_perm(self, perm, obj=None):
+        """Does the user have a specific permission?"""
+        # Simplest possible answer: Yes, always
+        return True
+
+    def has_module_perms(self, app_label):
+        """Does the user have permissions to view the app `app_label`?"""
+        # Simplest possible answer: Yes, always
+        return True
 
     @property
-    def fio(self):
-        return f'{self.last_name} {self.name}' if self.last_name else self.name
+    def is_staff(self):
+        """Is the user a member of staff?"""
+        # Simplest possible answer: All admins are staff
+        return self.is_admin

@@ -14,7 +14,15 @@
         <div class="menu">
             <a href="" class="active">Главная</a>
             <a href="">Туры</a>
-            <p onclick="ShowAuthorization()">Личный кабинет</p>
+            {% if user.is_authenticated %}
+                <a href="{% url 'edit_profile' %}" class="profile">
+                    <div style="display: inline-block; background-size: cover; background-position: center;width:35px; height: 35px; border: none; border-radius: 100%; background-image: url('{{ user.image.url }}')"></div>
+                    <span style="vertical-align: center">{{ user.name }}</span>
+                </a>
+                <a href="{% url 'logout_user' %}"><img src="/static/img/front/exit.png" alt=""></a>
+            {% else %}
+                <p onclick="ShowAuthorization()">Личный кабинет</p>
+            {% endif %}
         </div>
     </section>
     <div class="slide"></div>
@@ -31,12 +39,23 @@
         </form>
     </div>
     <div class="popular-trip max-content">
-        <h4>Популярные туры</h4>
-        <div>
+        <div><h4>Популярные туры</h4> <small>Смотреть все</small></div>
+        <div class="popular-trips">
             {% for trip in trips %}
-                {#                {{ trip }}#}
+                <div class="block-trip" style="background-image: url('{{ trip.image.url }}')">
+                    <div class="image"></div>
+                    <div class="block-content-trip">
+                        <h5>{{ trip.title }}</h5>
+                        {% if trip.price %}
+                            <small><img src="/static/img/front/money.png" alt=""> &nbsp;{{ trip.price }}</small>
+                        {% endif %}
+                        <p>{{ trip.description|truncatewords:50 }}</p>
+                        <a href="">
+                            <button>Подробнее</button>
+                        </a>
+                    </div>
+                </div>
             {% endfor %}
-
         </div>
     </div>
     {# Блок для чего-то #}
@@ -56,18 +75,18 @@
 {% block modalwindow %}
     <section class="modal-block">
         <div class="modal-window login-form">
-            <h4>Аутентификация</h4>
-            <form action="" method="post">
+            <h4>Авторизация</h4>
+            <form action="{% url 'login_user' %}" method="post">
                 {% csrf_token %}
                 <label for="">
-                    <input type="text" name="login" placeholder="Логин">
+                    <input type="text" name="email" placeholder="Логин">
                 </label>
                 <label for="" class="password">
-                    <input type="password" name="password" placeholder="Пароль">
+                    <input type="password" name="password1" placeholder="Пароль">
                 </label>
                 <button>Войти</button>
             </form>
-            <a href="">Зарегистрироваться</a>
+            <a href="{% url 'register' %}">Зарегистрироваться</a>
         </div>
     </section>
 {% endblock %}

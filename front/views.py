@@ -1,5 +1,7 @@
 from django.shortcuts import render
+from trip.models import *
 
 
-def index(request):
-    return render(request, 'front/index.html')
+def front(request):
+    trips = Trip.objects.all()
+    return render(request, 'front/index.html', locals())
