@@ -18,8 +18,8 @@ class Trip(models.Model):
         return self.title
 
     def image(self):
-        i = random.randint(0, self.place.count() - 1)
-        return self.place.all()[i].image
+        i = random.randint(0, self.place.filter(image__isnull=False).distinct().count() - 1)
+        return self.place.filter(image__isnull=False).distinct()[i].image.all()[0]
 
     def price(self):
         all_price = 0
@@ -37,6 +37,17 @@ class UserTrip(models.Model):
 
     def __str__(self):
         return self.title
+
+
+# # Пользовательские маршруты
+# class UserPlace(models.Model):
+#     trip = models.ForeignKey(Trip, on_delete=models.CASCADE, verbose_name='Тур')
+#     place = models.ForeignKey(Place, on_delete=models.CASCADE, verbose_name='Место')
+#     visit_date = models.DateField(blank=True, null=True, verbose_name='Дата')
+#     visit_time = models.TimeField(blank=True, null=True, verbose_name='Время')
+#
+#     def __str__(self):
+#         return self.place.title
 
 
 # Избранное

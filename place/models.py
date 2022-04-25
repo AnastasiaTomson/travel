@@ -140,4 +140,7 @@ class Place(models.Model):
     image = models.ManyToManyField(Image, verbose_name='Изображения', blank=True)
 
     def __str__(self):
-        return self.title
+        return f'{self.title} ({self.city})'
+
+    def one_image(self):
+        return self.image.all()[0]
