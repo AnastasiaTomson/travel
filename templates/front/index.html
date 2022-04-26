@@ -130,18 +130,19 @@
 
 <section class="feedback">
     <div class="max-content">
-        <form action="" method="post">
+        <form action="{% url 'feedback' %}" method="post">
+            {% csrf_token %}
             <div>
                 <h4>Остались вопросы?</h4>
                 <small>Оставь заявку и мы ответим</small>
                 <p>
-                    <input type="text" name="name" placeholder="Имя">
+                    <input type="text" name="name" placeholder="Имя" required="required">
                 </p>
                 <p>
-                    <input type="text" name="phone" placeholder="Телефон">
+                    <input type="text" name="phone" placeholder="Телефон" required="required">
                 </p>
                 <p>
-                    <input type="email" name="email" placeholder="Почта">
+                    <input type="email" name="email" placeholder="Почта" required="required">
                 </p>
                 <button class="button">Оставить заявку</button>
             </div>
@@ -177,7 +178,7 @@
             <a href="" class="icon tg">+7 978 701 31 02</a>
         </div>
         <div class="footer-block">
-            <a href="" class="icon mail">office@windtravel.ru</a>
+            <a href="" class="icon mail">office_windtravel@mail.ru</a>
             <a href=""><img src="/static/img/front/vkF.svg" alt=""></a>
         </div>
     </div>
