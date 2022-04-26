@@ -139,7 +139,7 @@ a {
   .navbar {
     //background-color: #2B3E5E94;
     display: block;
-    z-index: 5;
+    z-index: 20;
     position: relative;
 
     > div {
@@ -517,17 +517,18 @@ a {
       label {
         position: relative;
 
-        &.password:before {
-          content: '';
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          right: 16px;
-          margin: auto 0;
-          width: 25px;
-          height: 8px;
-          background: url('/static/img/front/eye.png') no-repeat;
-          background-size: contain;
+        &.password {
+          position: relative;
+
+
+          img {
+            position: absolute;
+            width: 25px;
+            height: 8px;
+            right: 10px;
+            top: 24px;
+            cursor: pointer;
+          }
         }
 
         input {
@@ -622,17 +623,17 @@ a {
       label {
         position: relative;
 
-        &.password:before {
-          content: '';
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          right: 25px;
-          margin: auto 0;
-          width: 25px;
-          height: 8px;
-          background: url('/static/img/front/eye.png') no-repeat;
-          background-size: contain;
+        &.password {
+          position: relative;
+
+          img {
+            position: absolute;
+            width: 25px;
+            height: 8px;
+            right: 10px;
+            top: 24px;
+            cursor: pointer;
+          }
         }
       }
 

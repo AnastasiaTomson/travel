@@ -33,21 +33,20 @@ class UserTrip(models.Model):
     user = models.ForeignKey(MyUser, on_delete=models.CASCADE, verbose_name='Пользователь')
     title = models.CharField(max_length=255, verbose_name='Маршрут')
     description = models.TextField(verbose_name='Описание', blank=True, null=True)
-    place = models.ManyToManyField(Place, verbose_name='Места')
 
     def __str__(self):
         return self.title
 
 
-# # Пользовательские маршруты
-# class UserPlace(models.Model):
-#     trip = models.ForeignKey(Trip, on_delete=models.CASCADE, verbose_name='Тур')
-#     place = models.ForeignKey(Place, on_delete=models.CASCADE, verbose_name='Место')
-#     visit_date = models.DateField(blank=True, null=True, verbose_name='Дата')
-#     visit_time = models.TimeField(blank=True, null=True, verbose_name='Время')
-#
-#     def __str__(self):
-#         return self.place.title
+# Пользовательские маршруты
+class UserPlace(models.Model):
+    trip = models.ForeignKey(Trip, on_delete=models.CASCADE, verbose_name='Тур')
+    place = models.ForeignKey(Place, on_delete=models.CASCADE, verbose_name='Место')
+    visit_date = models.DateField(blank=True, null=True, verbose_name='Дата')
+    visit_time = models.TimeField(blank=True, null=True, verbose_name='Время')
+
+    def __str__(self):
+        return self.place.title
 
 
 # Избранное

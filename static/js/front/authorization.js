@@ -9,3 +9,12 @@ $('.modal-block').on('click', function (e) {
         }
     }
 })
+
+$('.password img').on('click', function () {
+    var $passwd = $('.password input[name="password1"]')
+    if ($passwd.attr('type') === 'text') {
+        $passwd.attr('type', 'password')
+    } else {
+        $passwd.attr('type', 'text')
+    }
+})
