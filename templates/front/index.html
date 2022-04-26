@@ -58,8 +58,12 @@
                 <div class="block-place" style="background-image: url('{{ place.one_image.img.url }}')">
                     <div class="image"></div>
                     {% if user.is_authenticated %}
-                        <a href="" class="like">
-                            <img src="/static/img/front/like.svg" alt="">
+                        <a href="{% url 'favourite_place' place.id %}" class="like">
+                            {% if place.favouriteplace_set.count != 0 %}
+                                <img src="/static/img/front/like-active.svg" alt="" height="40px">
+                            {% else %}
+                                <img src="/static/img/front/like.svg" alt="">
+                            {% endif %}
                         </a>
                     {% endif %}
                     <div class="block-content-place">

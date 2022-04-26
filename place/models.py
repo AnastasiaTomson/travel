@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import *
 
 
 # Картинки
@@ -144,3 +145,9 @@ class Place(models.Model):
 
     def one_image(self):
         return self.image.all()[0]
+
+
+# Избранное
+class FavouritePlace(models.Model):
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, verbose_name='Пользователь')
+    place = models.ForeignKey(Place, on_delete=models.CASCADE, verbose_name='Места')

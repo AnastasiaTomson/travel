@@ -50,7 +50,6 @@ class UserPlace(models.Model):
 
 
 # Избранное
-class Favourite(models.Model):
+class FavouriteTrip(models.Model):
     user = models.ForeignKey(MyUser, on_delete=models.CASCADE, verbose_name='Пользователь')
-    trip = models.ManyToManyField(Trip, verbose_name='Маршруты')
-    place = models.ManyToManyField(Place, verbose_name='Места')
+    trip = models.ForeignKey(Trip, on_delete=models.CASCADE, verbose_name='Маршруты')
