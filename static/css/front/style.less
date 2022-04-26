@@ -743,3 +743,124 @@ a {
   }
 
 }
+
+.feedback {
+  background-image: url("/static/img/front/feedback.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  height: 640px;
+  width: 100%;
+  margin-top: 5%;
+
+  > div {
+    display: grid;
+    height: 100%;
+
+    form {
+      background: rgba(0, 0, 0, 0.45);
+      height: 100%;
+      display: grid;
+      align-items: center;
+      justify-items: center;
+      width: 640px;
+      align-self: end;
+      justify-self: end;
+
+      > div {
+        display: block;
+        width: 360px;
+
+        h4 {
+          color: #FFFFFF;
+          font-family: 'Montserrat-Bold';
+          font-style: normal;
+          font-weight: 700;
+          font-size: 24px;
+          line-height: 29px;
+        }
+
+        button {
+          margin-top: 50px;
+        }
+
+        small {
+          margin-top: 5px;
+          font-family: 'Montserrat-Medium';
+          font-style: normal;
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 17px;
+          color: #FFFFFF;
+        }
+
+        input {
+          background: transparent;
+          border: none;
+          border-bottom: 1px solid #FFFFFF;
+          font-family: 'Montserrat-Medium';
+          font-style: normal;
+          font-weight: 500;
+          font-size: 15px;
+          line-height: 15px;
+          color: #FFFFFF;
+          margin-top: 45px;
+          width: 100%;
+        }
+      }
+    }
+
+  }
+}
+
+.footer {
+  background: #EDEDED;
+
+  .footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 52px;
+
+    .footer-block {
+      display: grid;
+      align-self: center;
+      grid-gap: 10px;
+
+      a {
+        font-family: 'Montserrat-Medium';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 17px;
+        color: #282828;
+        border-bottom: 1px solid transparent;
+
+        &.icon {
+          padding-left: 30px;
+          position: relative;
+
+          &.mail {
+            background: url('/static/img/front/mail.png') no-repeat;
+          }
+
+          &.tg {
+            background: url('/static/img/front/tg.png') no-repeat;
+          }
+
+          &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 16px;
+            margin: auto 0;
+            width: 14px;
+            height: 18px;
+            background-size: contain;
+          }
+        }
+      }
+    }
+  }
+}

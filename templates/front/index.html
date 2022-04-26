@@ -52,7 +52,7 @@
 
 <section class="content">
     <div class="popular-place max-content">
-        <div class="title-block"><h4>Интересные места</h4> <small>Смотреть все</small></div>
+        <div class="title-block"><h4>Интересные места</h4><a href=""><small>Смотреть все</small></a></div>
         <div class="popular-places">
             {% for place in places %}
                 <div class="block-place" style="background-image: url('{{ place.one_image.img.url }}')">
@@ -93,7 +93,7 @@
     <div class="popular-trip max-content">
         <div class="title-block"><h4>Популярные туры</h4>
             {% if trips.count > 3 %}
-                <small>Смотреть все</small>
+                <a href=""><small>Смотреть все</small></a>
             {% endif %}
         </div>
         <div class="popular-trips">
@@ -127,13 +127,30 @@
         </div>
     </div>
 </section>
+
 <section class="feedback">
-    <form action="">
-        <div></div>
-    </form>
+    <div class="max-content">
+        <form action="" method="post">
+            <div>
+                <h4>Остались вопросы?</h4>
+                <small>Оставь заявку и мы ответим</small>
+                <p>
+                    <input type="text" name="name" placeholder="Имя">
+                </p>
+                <p>
+                    <input type="text" name="phone" placeholder="Телефон">
+                </p>
+                <p>
+                    <input type="email" name="email" placeholder="Почта">
+                </p>
+                <button class="button">Оставить заявку</button>
+            </div>
+        </form>
+    </div>
 </section>
+
 <section class="gallery-section max-content">
-    <div class="title-block"><h4>Галерея</h4><small>Смотреть все</small></div>
+    <div class="title-block"><h4>Галерея</h4><a href=""><small>Смотреть все</small></a></div>
     <div class="gallery-block">
         {% for image in images %}
             <div style="background:
@@ -143,9 +160,29 @@
         {% endfor %}
     </div>
 </section>
-<section class="footer">
 
+<section class="footer">
+    <div class="max-content footer-content">
+        <div class="footer-block">
+            <a href="{% url 'index' %}">Главная</a>
+            <a href="">Туры</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'edit_profile' %}">Личный кабинет</a>
+            {% else %}
+                <p onclick="ShowAuthorization()">Личный кабинет</p>
+            {% endif %}
+        </div>
+        <div class="footer-block">
+            <a href="" class="icon tg">+7 978 701 31 02</a>
+            <a href="" class="icon tg">+7 978 701 31 02</a>
+        </div>
+        <div class="footer-block">
+            <a href="" class="icon mail">office@windtravel.ru</a>
+            <a href=""><img src="/static/img/front/vkF.svg" alt=""></a>
+        </div>
+    </div>
 </section>
+
 {% block modalwindow %}
     <section class="modal-block">
         <div class="modal-window login-form">
