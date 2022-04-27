@@ -135,6 +135,7 @@ a {
       > div {
         margin-top: 10px;
         display: flex;
+        gap: 20px;
         justify-content: space-between;
         flex-wrap: wrap;
 
@@ -406,11 +407,37 @@ a {
       color: rgb(4, 153, 221);
     }
 
-    #calendar2 tbody td.today{
+    #calendar2 tbody td.today {
       background: #0499DD;
       border-radius: 40px;
       border: none;
       color: #FFFFFF;
     }
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center!important;
+  justify-self: center;
+  gap: 10px;
+  margin-top: 30px;
+
+  a {
+    font-family: 'Montserrat-Medium';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #282828;
+  }
+
+  .active {
+    color: #0499DD;
+    font-family: 'Montserrat-Medium';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
   }
 }

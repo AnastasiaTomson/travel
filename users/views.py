@@ -39,6 +39,23 @@ def index(request):
     return render(request, 'users/index.html', locals())
 
 
+from django.core.paginator import Paginator
+
+
+@login_required()
+def favourite(request):
+    title = 'Избранное'
+    favourite_places = FavouritePlace.objects.all()
+    favourite_trips = FavouriteTrip.objects.all()
+    place_paginator = Paginator(favourite_places, 4)  # Покажет 4 избранных места при пагинации
+    trip_paginator = Paginator(favourite_trips, 3)  # Покажет 6 избранных туров при пагинации
+    place_page_number = request.GET.get('page_place')
+    place_page_obj = place_paginator.get_page(place_page_number)
+    trip_page_number = request.GET.get('page_trip')
+    trip_page_obj = trip_paginator.get_page(trip_page_number)
+    return render(request, 'users/favourite.html', locals())
+
+
 def register_user(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST, request.FILES)

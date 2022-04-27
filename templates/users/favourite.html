@@ -14,12 +14,12 @@
     <div class="left-sidebar">
         <img src="/static/img/user/logo.svg" alt="">
         <div class="menu">
-            <a href="{% url 'user' %}" class="active">
+            <a href="{% url 'user' %}">
                 <svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M24.375 28.875H10.625C9.16631 28.875 7.76736 28.2955 6.73591 27.2641C5.70446 26.2326 5.125 24.8337 5.125 23.375V14.7235C5.12498 13.7778 5.36881 12.8481 5.83294 12.0241C6.29708 11.2001 6.96583 10.5097 7.77463 10.0196L14.6496 5.85337C15.5092 5.33251 16.495 5.05713 17.5 5.05713C18.505 5.05713 19.4908 5.33251 20.3504 5.85337L27.2254 10.0196C28.034 10.5096 28.7026 11.1998 29.1667 12.0235C29.6308 12.8472 29.8748 13.7766 29.875 14.7221V23.375C29.875 24.8337 29.2955 26.2326 28.2641 27.2641C27.2326 28.2955 25.8337 28.875 24.375 28.875ZM13.375 23.375H21.625H13.375Z"
-                          fill="#7D7D7D"/>
+                          fill="white"/>
                     <path d="M13.375 23.375H21.625M24.375 28.875H10.625C9.16631 28.875 7.76736 28.2955 6.73591 27.2641C5.70446 26.2326 5.125 24.8337 5.125 23.375V14.7235C5.12498 13.7778 5.36881 12.8481 5.83294 12.0241C6.29708 11.2001 6.96583 10.5097 7.77463 10.0196L14.6496 5.85337C15.5092 5.33251 16.495 5.05713 17.5 5.05713C18.505 5.05713 19.4908 5.33251 20.3504 5.85337L27.2254 10.0196C28.034 10.5096 28.7026 11.1998 29.1667 12.0235C29.6308 12.8472 29.8748 13.7766 29.875 14.7221V23.375C29.875 24.8337 29.2955 26.2326 28.2641 27.2641C27.2326 28.2955 25.8337 28.875 24.375 28.875Z"
-                          stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                          stroke="#7D7D7D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 Главная
             </a>
@@ -30,7 +30,7 @@
                 </svg>
                 Мои туры
             </a>
-            <a href="{% url 'favourite' %}">
+            <a href="{% url 'favourite' %}" class="active">
                 <svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M23.2404 28.9599C22.9053 28.9596 22.5779 28.8593 22.3002 28.6718L16.6434 24.8804C16.6155 24.8611 16.5825 24.8508 16.5486 24.8508C16.5148 24.8508 16.4817 24.8611 16.4538 24.8804L10.797 28.6718C10.513 28.8614 10.178 28.9602 9.83643 28.955C9.49491 28.9497 9.16307 28.8407 8.88496 28.6424C8.60686 28.4441 8.39565 28.1659 8.27939 27.8448C8.16313 27.5236 8.14732 27.1747 8.23405 26.8443L10.0918 20.2928C10.1006 20.2598 10.0996 20.225 10.0888 20.1927C10.078 20.1603 10.058 20.1319 10.0312 20.1108L4.67771 15.9023C4.39589 15.6924 4.18684 15.3995 4.07987 15.0647C3.97291 14.73 3.97339 14.3701 4.08126 14.0357C4.18912 13.7012 4.39896 13.4089 4.68135 13.1997C4.96374 12.9905 5.30451 12.8749 5.6559 12.8692L12.4804 12.6114C12.514 12.6091 12.5462 12.5971 12.5731 12.5769C12.6 12.5567 12.6205 12.5292 12.6321 12.4976L14.9828 6.10531C15.1012 5.78125 15.3165 5.50143 15.5992 5.30373C15.882 5.10603 16.2187 5 16.5638 5C16.9088 5 17.2455 5.10603 17.5283 5.30373C17.8111 5.50143 18.0263 5.78125 18.1448 6.10531L20.4955 12.4976C20.5071 12.5292 20.5276 12.5567 20.5545 12.5769C20.5814 12.5971 20.6136 12.6091 20.6471 12.6114L27.4717 12.8692C27.823 12.8749 28.1638 12.9905 28.4462 13.1997C28.7286 13.4089 28.9384 13.7012 29.0463 14.0357C29.1542 14.3701 29.1546 14.73 29.0477 15.0647C28.9407 15.3995 28.7317 15.6924 28.4498 15.9023L23.0964 20.1108C23.0688 20.1312 23.0481 20.1596 23.0373 20.1922C23.0264 20.2247 23.0259 20.2599 23.0357 20.2928L24.8935 26.8443C24.9587 27.0956 24.9652 27.3586 24.9124 27.6127C24.8596 27.8669 24.749 28.1056 24.5892 28.3102C24.4293 28.5147 24.2245 28.6798 23.9906 28.7924C23.7568 28.9051 23.5001 28.9624 23.2404 28.9599ZM16.5524 23.3335C16.8882 23.3437 17.2131 23.4547 17.4851 23.652L23.1419 27.4434C23.1705 27.4651 23.2055 27.4771 23.2415 27.4774C23.2775 27.4776 23.3126 27.4663 23.3416 27.4449C23.3707 27.4236 23.392 27.3935 23.4024 27.359C23.4129 27.3246 23.4119 27.2876 23.3997 27.2538L21.5419 20.7022C21.4505 20.3808 21.4572 20.0395 21.5613 19.7219C21.6653 19.4044 21.8619 19.1252 22.1258 18.9203L27.4792 14.7118C27.5084 14.6913 27.5303 14.662 27.5416 14.6281C27.5529 14.5943 27.553 14.5577 27.542 14.5237C27.531 14.4898 27.5094 14.4603 27.4803 14.4395C27.4513 14.4188 27.4164 14.4079 27.3807 14.4085L20.5561 14.1507C20.222 14.1377 19.8993 14.0254 19.6292 13.8282C19.3591 13.631 19.1538 13.3579 19.0396 13.0436L16.6889 6.65127C16.6783 6.61733 16.6571 6.58767 16.6285 6.5666C16.5998 6.54554 16.5652 6.53418 16.5297 6.53418C16.4941 6.53418 16.4595 6.54554 16.4308 6.5666C16.4022 6.58767 16.381 6.61733 16.3704 6.65127L14.0425 13.036C13.9283 13.3503 13.723 13.6235 13.4529 13.8206C13.1828 14.0178 12.8601 14.1301 12.5259 14.1431L5.70139 14.4009C5.66571 14.4003 5.63078 14.4112 5.60174 14.432C5.5727 14.4527 5.55108 14.4822 5.54005 14.5161C5.52902 14.5501 5.52916 14.5867 5.54046 14.6205C5.55176 14.6544 5.57361 14.6837 5.60282 14.7042L10.9639 18.9203C11.2269 19.1259 11.4229 19.4051 11.5269 19.7224C11.6309 20.0397 11.6381 20.3808 11.5477 20.7022L9.69754 27.2538C9.6865 27.2866 9.68644 27.3221 9.69739 27.3549C9.70833 27.3878 9.72968 27.4162 9.7582 27.4358C9.78567 27.4593 9.82063 27.4722 9.85678 27.4722C9.89292 27.4722 9.92788 27.4593 9.95535 27.4358L15.6121 23.6444C15.8886 23.461 16.2131 23.3634 16.5448 23.3638L16.5524 23.3335Z"
                           fill="#7D7D7D"/>
@@ -40,29 +40,80 @@
         </div>
     </div>
     <div class="content">
-        <h2>Привет, {{ user.name }}
-            <span class="iconify" data-icon="emojione:waving-hand-medium-light-skin-tone"
-                  style="color: white; font-size: 33px; vertical-align: sub"></span>
-        </h2>
-        {% if top_trips.count == 3 %}
-            <div class="top-trips">
-                <h4>Топ 3 тура</h4>
+        <h2>Избранное</h2>
+        {% if favourite_places.count %}
+            <div class="top-places">
+                <h4>Места</h4>
                 <div>
-                    {% for trip in top_trips %}
-                        <div class="block-trip" style="background-image: url('{{ trip.image.img.url }}')">
+                    {% for item in place_page_obj %}
+                        <div class="block-place">
+                            <div class="image"
+                                 style="background-image: url('{{ item.place.one_image.img.url }}')"></div>
+                            <div class="text">
+                                <h5>{{ item.place.title }}</h5>
+                                <p>{{ item.place.description|truncatewords:5 }}</p>
+                            </div>
+                            <div class="action-row-like">
+                                {% if item.place.favouriteplace_set.count != 0 %}
+                                    <img onclick="CheckFavouritePlace(this, {{ item.place.id }})"
+                                         src="/static/img/user/like-active.svg" alt="">
+                                {% else %}
+                                    <img onclick="CheckFavouritePlace(this, {{ item.place.id }})"
+                                         src="/static/img/user/like.svg" alt="">
+                                {% endif %}
+                                <img src="/static/img/front/add.png" alt="">
+                            </div>
+                        </div>
+                    {% endfor %}
+                    {% if place_page_obj.paginator.num_pages != 1 %}
+                        <div class="pagination">
+                            {% if place_page_obj.has_previous %}
+                                <a href="?page_place={{ place_page_obj.previous_page_number }}"> < </a>
+                            {% endif %}
+
+                            {% if place_page_obj.number|add:'-2' > 1 %}
+                                <a href="?page_place={{ place_page_obj.number|add:'-3' }}">&hellip;</a>
+                            {% endif %}
+
+                            {% for i in place_page_obj.paginator.page_range %}
+                                {% if place_page_obj.number == i %}
+                                    <span class="active">{{ i }}</span>
+                                {% elif i > place_page_obj.number|add:'-3' and i < place_page_obj.number|add:'3' %}
+                                    <a href="?page_place={{ i }}">{{ i }}</a>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if place_page_obj.paginator.num_pages > place_page_obj.number|add:'2' %}
+                                <a href="?page_place={{ place_page_obj.number|add:'3' }}">&hellip;</a>
+                            {% endif %}
+
+                            {% if place_page_obj.has_next %}
+                                <a href="?page_place={{ place_page_obj.next_page_number }}"> ></a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+        {% if favourite_trips.count %}
+            <div class="top-trips">
+                <h4>Туры</h4>
+                <div>
+                    {% for item in trip_page_obj %}
+                        <div class="block-trip" style="background-image: url('{{ item.trip.image.img.url }}')">
                             <div class="image"></div>
                             <div class="like">
-                                {% if trip.favouritetrip_set.count != 0 %}
-                                    <img onclick="CheckFavouritePlace(this, {{ trip.id }})"
+                                {% if item.trip.favouritetrip_set.count != 0 %}
+                                    <img onclick="CheckFavouritePlace(this, {{ item.trip.id }})"
                                          src="/static/img/front/like-active.svg" alt=""
                                          height="40px">
                                 {% else %}
-                                    <img onclick="CheckFavouritePlace(this, {{ trip.id }})"
+                                    <img onclick="CheckFavouritePlace(this, {{ item.trip.id }})"
                                          src="/static/img/front/like.svg" alt="">
                                 {% endif %}
                             </div>
                             <div class="block-content-trip">
-                                <h5>{{ trip.title }}</h5>
+                                <h5>{{ item.trip.title }}</h5>
                                 <div class="place-action">
                                     <a href="">
                                         Подробнее
@@ -75,32 +126,33 @@
                         </div>
                     {% endfor %}
                 </div>
-            </div>
-        {% endif %}
-        {% if top_places.count == 3 %}
-            <div class="top-places">
-                <h4>Топ 3 места</h4>
-                <div>
-                    {% for place in top_places %}
-                        <div class="block-place">
-                            <div class="image" style="background-image: url('{{ place.one_image.img.url }}')"></div>
-                            <div class="text">
-                                <h5>{{ place.title }}</h5>
-                                <p>{{ place.description|truncatewords:5 }}</p>
-                            </div>
-                            <div class="action-row-like">
-                                {% if place.favouriteplace_set.count != 0 %}
-                                    <img onclick="CheckFavouritePlace(this, {{ place.id }})"
-                                         src="/static/img/user/like-active.svg" alt="">
-                                {% else %}
-                                    <img onclick="CheckFavouritePlace(this, {{ place.id }})"
-                                         src="/static/img/user/like.svg" alt="">
-                                {% endif %}
-                                <img src="/static/img/front/add.png" alt="">
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
+                {% if trip_page_obj.paginator.num_pages != 1 %}
+                    <div class="pagination">
+                        {% if trip_page_obj.has_previous %}
+                            <a href="?page_place={{ trip_page_obj.previous_page_number }}"> < </a>
+                        {% endif %}
+
+                        {% if trip_page_obj.number|add:'-2' > 1 %}
+                            <a href="?page_trip={{ trip_page_obj.number|add:'-3' }}">&hellip;</a>
+                        {% endif %}
+
+                        {% for i in trip_page_obj.paginator.page_range %}
+                            {% if trip_page_obj.number == i %}
+                                <span class="active">{{ i }}</span>
+                            {% elif i > trip_page_obj.number|add:'-3' and i < trip_page_obj.number|add:'3' %}
+                                <a href="?page_trip={{ i }}">{{ i }}</a>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if trip_page_obj.paginator.num_pages > trip_page_obj.number|add:'2' %}
+                            <a href="?trip_place={{ trip_page_obj.number|add:'3' }}">&hellip;</a>
+                        {% endif %}
+
+                        {% if trip_page_obj.has_next %}
+                            <a href="?trip_place={{ trip_page_obj.next_page_number }}"> ></a>
+                        {% endif %}
+                    </div>
+                {% endif %}
             </div>
         {% endif %}
     </div>
