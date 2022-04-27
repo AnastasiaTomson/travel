@@ -58,13 +58,14 @@
                 <div class="block-place" style="background-image: url('{{ place.one_image.img.url }}')">
                     <div class="image"></div>
                     {% if user.is_authenticated %}
-                        <a href="{% url 'favourite_place' place.id %}" class="like">
+                        <div class="like">
                             {% if place.favouriteplace_set.count != 0 %}
-                                <img src="/static/img/front/like-active.svg" alt="" height="40px">
+                                <img onclick="CheckFavouritePlace(this, {{ place.id }})" src="/static/img/front/like-active.svg" alt=""
+                                     height="40px">
                             {% else %}
-                                <img src="/static/img/front/like.svg" alt="">
+                                <img onclick="CheckFavouritePlace(this, {{ place.id }})" src="/static/img/front/like.svg" alt="">
                             {% endif %}
-                        </a>
+                        </div>
                     {% endif %}
                     <div class="block-content-place">
                         <h5>{{ place.title }}</h5>
@@ -105,8 +106,12 @@
                 <div class="block-trip" style="background-image: url('{{ trip.image.img.url }}')">
                     <div class="image"></div>
                     {% if user.is_authenticated %}
-                        <a href="" class="like">
-                            <img src="/static/img/front/like.svg" alt="">
+                        <a href="{% url 'favourite_trip' trip.id %}" class="like">
+                            {% if trip.favouritetrip_set.count != 0 %}
+                                <img src="/static/img/front/like-active.svg" alt="" height="40px">
+                            {% else %}
+                                <img src="/static/img/front/like.svg" alt="">
+                            {% endif %}
                         </a>
                     {% endif %}
                     <div class="block-content-trip">
@@ -210,5 +215,6 @@
 
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/front/authorization.js"></script>
+<script src="/static/js/front/favourite.js"></script>
 </body>
 </html>
