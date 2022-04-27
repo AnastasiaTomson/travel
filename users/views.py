@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from .forms import *
+from place.models import *
+from trip.models import *
 from .admin import UserCreationForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -29,8 +31,12 @@ def logout_user(request):
     return HttpResponseRedirect(reverse('front'))
 
 
+@login_required()
 def index(request):
-    return render(request, 'users/index.html')
+    title = 'Главная'
+    top_places = Place.objects.all()[:3]
+    top_trips = Trip.objects.all()[:3]
+    return render(request, 'users/index.html', locals())
 
 
 def register_user(request):

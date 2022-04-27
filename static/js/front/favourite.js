@@ -13,3 +13,18 @@ function CheckFavouritePlace(obj, id){
         }
     })
 }
+function CheckFavouriteTrip(obj, id){
+    $.ajax({
+        url: '/trip/favourite_trip/'+id,
+        type: 'GET',
+        success: function (response){
+            if (response.status) {
+                if (response.type === 'active') {
+                    $(obj).attr('src', '/static/img/front/like-active.svg')
+                } else {
+                    $(obj).attr('src', '/static/img/front/like.svg')
+                }
+            }
+        }
+    })
+}
