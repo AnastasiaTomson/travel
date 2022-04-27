@@ -60,6 +60,19 @@ a {
         border: none;
         border-bottom: 1px solid transparent;
 
+        &:first-child {
+          &:hover {
+            text-decoration: underline;
+            text-decoration-color: #0499DDFF;
+            color: #0499DD;
+
+            svg path {
+              fill: #FFFFFF;
+              stroke: #0499DD;
+            }
+          }
+        }
+
         &:hover {
           text-decoration: underline;
           text-decoration-color: #0499DDFF;
@@ -418,7 +431,7 @@ a {
 
 .pagination {
   display: flex;
-  justify-content: center!important;
+  justify-content: center !important;
   justify-self: center;
   gap: 10px;
   margin-top: 30px;
