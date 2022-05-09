@@ -31,16 +31,19 @@ class Trip(models.Model):
 # Пользовательские маршруты
 class UserTrip(models.Model):
     user = models.ForeignKey(MyUser, on_delete=models.CASCADE, verbose_name='Пользователь')
-    title = models.CharField(max_length=255, verbose_name='Маршрут')
+    title = models.CharField(max_length=255, verbose_name='Название')
     description = models.TextField(verbose_name='Описание', blank=True, null=True)
 
     def __str__(self):
         return self.title
 
+    def place_in_trip(self):
+        return [i.place.id for i in self.userplace_set.all()]
+
 
 # Пользовательские маршруты
 class UserPlace(models.Model):
-    trip = models.ForeignKey(Trip, on_delete=models.CASCADE, verbose_name='Тур')
+    trip = models.ForeignKey(UserTrip, on_delete=models.CASCADE, verbose_name='Тур')
     place = models.ForeignKey(Place, on_delete=models.CASCADE, verbose_name='Место')
     visit_date = models.DateField(blank=True, null=True, verbose_name='Дата')
     visit_time = models.TimeField(blank=True, null=True, verbose_name='Время')

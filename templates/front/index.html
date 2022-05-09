@@ -17,7 +17,7 @@
                 <a href="" class="active">Главная</a>
                 <a href="">Туры</a>
                 {% if user.is_authenticated %}
-                    <a href="{% url 'edit_profile' %}" class="profile">
+                    <a href="{% url 'user' %}" class="profile">
                         <div style="display: inline-block; background-size: cover; background-position: center;width:35px; height: 35px; border: none; border-radius: 100%; background-image: url('{{ user.image.url }}')"></div>
                         <span style="vertical-align: center">{{ user.name }}</span>
                     </a>
