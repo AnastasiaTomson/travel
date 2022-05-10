@@ -17,3 +17,8 @@ def split(string, sep):
 @register.simple_tag
 def exist_in_trip(place, trip):
     return place.userplace_set.filter(trip=trip).exists()
+
+#
+# @register.inclusion_tag('results.html')
+# def show_places(places):
+#

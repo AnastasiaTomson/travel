@@ -43,12 +43,14 @@
     <div class="content">
         <div style="display: flex; justify-content: space-between;">
             <h2>Просмотр тура</h2>
-{#            <a>Скачать</a>#}
+            <a href="{% url 'delete_user_trip' trip.id %}"><span class="iconify"
+                                                                 data-icon="akar-icons:trash-can"></span></a>
         </div>
         <div class="my-trip white-block">
             <div>
                 <h4>Основная информация </h4>
-                <a href="{% url 'edit_my_trip' trip.id %}"><span class="iconify" data-icon="eva:edit-2-fill" style="color: #170f49; font-size: 20px;"></span></a>
+                <a href="{% url 'edit_my_trip' trip.id %}"><span class="iconify" data-icon="eva:edit-2-fill"
+                                                                 style="color: #170f49; font-size: 20px;"></span></a>
             </div>
             <div>
                 <div class="text">
@@ -71,7 +73,16 @@
         <div class="my-trip-place white-block">
             <div>
                 <h4>Места</h4>
-                <a href="{% url 'edit_my_trip_places' trip.id %}"><span class="iconify" data-icon="eva:edit-2-fill" style="color: #170f49; font-size: 20px;"></span></a>
+                <div>
+                    <a href="{% url 'add_my_trip_place' trip.id %}"><span class="iconify"
+                                                                          data-icon="fluent:add-circle-16-filled"
+                                                                          style="color: #248500; font-size: 25px;"></span></a>
+                    {% if trip.userplace_set.exists %}
+                        <a href="{% url 'edit_my_trip_places' trip.id %}"><span class="iconify"
+                                                                                data-icon="eva:edit-2-fill"
+                                                                                style="color: #170f49; font-size: 20px;"></span></a>
+                    {% endif %}
+                </div>
             </div>
             <div class="my-trip-place-show">
                 {% for item in places %}

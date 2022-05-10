@@ -1,0 +1,23 @@
+<div class="add-my-trip-place">
+{#    {% load bootstrap3 %}#}
+{#    {% bootstrap_pagination places %}#}
+    {% load bootstrap_pagination from bootstrap3 %}
+    {% for item in places %}
+        <div class="block-place">
+            <div class="image"
+                 style="background-image: url('{{ item.one_image.img.url }}')"></div>
+            <div class="text">
+                <h5>{{ item.title }}</h5>
+                <p>Город: {{ item.city }}</p>
+            </div>
+            <div class="action-row-like">
+                <label for="id_place-{{ item.id }}" onclick="CheckPlace(this)">
+                    <img src="/static/img/user/check-place.svg" alt="">
+                    <input id="id_place-{{ item.id }}" type="checkbox" name="place" value="{{ item.id }}"
+                           style="display:none;">
+                </label>
+            </div>
+        </div>
+    {% endfor %}
+    {% bootstrap_pagination places pages_to_show="5" %}
+</div>

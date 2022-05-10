@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'place.apps.PlaceConfig',
     'django.contrib.admin',
     'rest_framework',
+    "bootstrap3",
 ]
 
 MIDDLEWARE = [
@@ -70,6 +71,11 @@ TEMPLATES = [
         },
     },
 ]
+
+TEMPLATE_CONTEXT_PROCESSORS = {
+    "django.core.context_processors.request",
+}
+
 
 WSGI_APPLICATION = 'travel.wsgi.application'
 AUTH_USER_MODEL = 'users.MyUser'

@@ -1,11 +1,14 @@
 function ShowAuthorization() {
+    $('.modal-block').children().hide()
     $('.modal-block').css('display', 'flex')
+    $('.login-form').show()
 }
 
 $('.modal-block').on('click', function (e) {
     if ($('.modal-block').is(':visible')) {
         if (!$('.modal-window').is(e.target) && $('.modal-window').has(e.target).length === 0) {
             $('.modal-block').hide()
+            $('.modal-block').children().hide()
         }
     }
 })

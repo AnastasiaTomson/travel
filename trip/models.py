@@ -40,6 +40,13 @@ class UserTrip(models.Model):
     def place_in_trip(self):
         return [i.place.id for i in self.userplace_set.all()]
 
+    def image(self):
+        if self.userplace_set.exists():
+            i = random.randint(0, self.userplace_set.filter(place__image__isnull=False).distinct().count() - 1)
+            return self.userplace_set.filter(place__image__isnull=False).distinct()[i].place.image.all()[0]
+        else:
+            return None
+
 
 # Пользовательские маршруты
 class UserPlace(models.Model):

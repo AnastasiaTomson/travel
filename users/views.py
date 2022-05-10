@@ -5,15 +5,16 @@ from trip.form import *
 from place.models import *
 from trip.models import *
 from .admin import UserCreationForm
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.hashers import make_password
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from rest_framework import generics
 import json
 from django.core.cache import cache
+from django.template.loader import render_to_string
 
 
 def login_user(request):
@@ -93,6 +94,13 @@ def edit_my_trip(request, id):
 
 
 @login_required()
+def delete_user_trip(request, id):
+    trip = UserTrip.objects.get(id=id)
+    trip.delete()
+    return HttpResponseRedirect(reverse('user_trips'))
+
+
+@login_required()
 def edit_my_trip_places(request, id):
     trip = UserTrip.objects.get(id=id)
     title = trip.title
@@ -110,6 +118,40 @@ def edit_my_trip_places(request, id):
                 pass
             return HttpResponseRedirect(reverse('my_trip', args={id: id}))
     return render(request, 'users/edit_my_trip_places.html', locals())
+
+
+def get_paginated_page(request, objects, number=10):
+    current_page = Paginator(objects, number)
+    page = request.GET.get('page') if request.method == 'GET' else request.POST.get('page')
+    try:
+        return current_page.page(page)
+    except PageNotAnInteger:
+        return current_page.page(1)
+    except EmptyPage:
+        return current_page.page(current_page.num_pages)
+
+
+@login_required()
+def add_my_trip_place(request, id):
+    trip = UserTrip.objects.get(id=id)
+    title = trip.title
+    if request.method == 'POST':
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({
+                "result": True,
+                "articles": render_to_string(
+                    request=request,
+                    template_name='users/place.html',
+                    context={'places': get_paginated_page(request, Place.objects.exclude(id__in=trip.place_in_trip()), 5)}
+                )
+            })
+        else:
+            for i in request.POST.getlist('place'):
+                place = Place.objects.get(id=int(i))
+                UserPlace.objects.create(place=place, trip=trip)
+            return HttpResponseRedirect(reverse('my_trip', args={id: id}))
+    return render(request=request, template_name='users/add_my_trip_places.html',
+                  context={'places': get_paginated_page(request, Place.objects.exclude(id__in=trip.place_in_trip()), 5), 'id': id})
 
 
 @login_required()

@@ -41,51 +41,14 @@
     </div>
 
     <div class="content">
-        <form action="{% url 'edit_my_trip_places' id %}" id="form" method="post">
+        <form action="{% url 'add_my_trip_place' id %}" id="form" method="post">
             {% csrf_token %}
-            {{ formset.management_form }}
-            {{ formset.non_form_errors }}
             <div style="display: flex; justify-content: space-between;">
                 <h2>Просмотр тура</h2>
             </div>
             <div class="my-trip-place white-block">
-                <h4>Редактировать дату</h4>
-                <div class="edit-my-trip-place">
-                    {% for foo in formset.forms %}
-                        <div class="block-place">
-                            <div class="hidden">
-                                {{ foo.place }}
-                                {{ foo.id }}
-                            </div>
-                            <div class="image"
-                                 style="background-image: url('{{ foo.instance.place.one_image.img.url }}')"></div>
-                            <div class="text">
-                                <h5>{{ foo.instance.place.title }}</h5>
-                                <p>Город: {{ foo.instance.place.city }}</p>
-                                <div>
-                                    <label for="{{ foo.visit_date.id_for_label }}">
-                                        <p>Дата посещения</p>
-                                        <div class="calendar">
-                                            {{ foo.visit_date }}
-                                        </div>
-                                    </label>
-                                    <label for="{{ foo.visit_time.id_for_label }}">
-                                        <p>Время посещения</p>
-                                        <div class="clock">
-                                            {{ foo.visit_time }}
-                                        </div>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="action-row-like">
-                                <label onclick="ToggleImageDelete(this)" class="checkbox-delete">
-                                    <div></div>
-                                    {{ foo.DELETE }}
-                                </label>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
+                <h4>Добавить место</h4>
+                {% include 'users/place.html' %}
                 <div class="save-btn">
                     <button>Сохранить</button>
                 </div>
@@ -131,6 +94,8 @@
 
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/user/calendar.js"></script>
-<script src="/static/js/user/edit-place.js"></script>
+<script src="/static/js/user/add_place_to_trip.js"></script>
+<script src="/static/js/user/pagination.js"></script>
+
 </body>
 </html>

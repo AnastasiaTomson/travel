@@ -134,6 +134,9 @@ a {
     }
 
     .my-trips {
+      > div {
+        justify-content: stretch !important;
+      }
       .block-trip {
         cursor: pointer;
         border: 1px solid #588BD3;
@@ -672,7 +675,7 @@ a {
     color: #282828;
   }
 
-  .active {
+  .active a {
     color: #0499DD;
     font-family: 'Montserrat-Medium';
     font-style: normal;
@@ -989,36 +992,11 @@ a {
   }
 }
 
+.pagination > li {
+  list-style-type: none;
+}
+
 .my-trip-place {
-  .step-edit-block {
-    display: grid;
-    grid-template-columns: 6fr 6fr;
-    grid-gap: 5px;
-    justify-content: space-around!important;
-    border: none!important;
-
-    div {
-      width: 100%;
-      text-align: center;
-      font-family: 'Montserrat-Regular';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 30px;
-      border-bottom: 2px solid #D9DBE9;
-      color: #6F6C90;
-      cursor: pointer;
-
-      &.active {
-        color: #4A3AFF;
-        border-bottom: 2px solid #4A3AFF;
-      }
-      &:hover {
-        color: #4A3AFF;
-        border-bottom: 2px solid #4A3AFF;
-      }
-    }
-  }
 
   .checkbox-delete {
     cursor: pointer;
