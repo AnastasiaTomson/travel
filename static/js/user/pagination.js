@@ -25,7 +25,7 @@ class Index {
                     // Если запрос прошёл успешно и сайт вернул результат
                     if (json.result) {
                         window.history.pushState({route: path}, "EVILEG", path); // устанавливаем URL в строку браузера
-                        $(".add-my-trip-place").replaceWith(json.articles); // Заменяем div со списком статей на новый
+                        $(".places-pagination").replaceWith(json.articles); // Заменяем div со списком статей на новый
                         Index.initPaginator(); // Переинициализируем пагинатор
                         $(window).scrollTop(0); // Скроллим страницу в начало
                     }

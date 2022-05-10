@@ -1,0 +1,23 @@
+<div class="like-place places-pagination">
+    {% load bootstrap_pagination from bootstrap3 %}
+    {% for item in places %}
+        <div class="block-place">
+            <div class="image"
+                 style="background-image: url('{{ item.place.one_image.img.url }}')"></div>
+            <div class="text">
+                <h5>{{ item.place.title }}</h5>
+                <p>{{ item.place.description|truncatewords:5 }}</p>
+            </div>
+            <div class="action-row-like">
+                {% if item.place.favouriteplace_set.count != 0 %}
+                    <img onclick="CheckFavouritePlace(this, {{ item.place.id }})"
+                         src="/static/img/user/like-active.svg" alt="">
+                {% else %}
+                    <img onclick="CheckFavouritePlace(this, {{ item.place.id }})"
+                         src="/static/img/user/like.svg" alt="">
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+    {% bootstrap_pagination places pages_to_show="5" %}
+</div>

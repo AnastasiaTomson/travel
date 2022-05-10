@@ -41,64 +41,15 @@
     </div>
     <div class="content">
         <h2>Избранное</h2>
-        {% if favourite_places.count %}
-            <div class="top-places">
-                <h4>Места</h4>
-                <div>
-                    {% for item in place_page_obj %}
-                        <div class="block-place">
-                            <div class="image"
-                                 style="background-image: url('{{ item.place.one_image.img.url }}')"></div>
-                            <div class="text">
-                                <h5>{{ item.place.title }}</h5>
-                                <p>{{ item.place.description|truncatewords:5 }}</p>
-                            </div>
-                            <div class="action-row-like">
-                                {% if item.place.favouriteplace_set.count != 0 %}
-                                    <img onclick="CheckFavouritePlace(this, {{ item.place.id }})"
-                                         src="/static/img/user/like-active.svg" alt="">
-                                {% else %}
-                                    <img onclick="CheckFavouritePlace(this, {{ item.place.id }})"
-                                         src="/static/img/user/like.svg" alt="">
-                                {% endif %}
-                            </div>
-                        </div>
-                    {% endfor %}
-                    {% if place_page_obj.paginator.num_pages != 1 %}
-                        <div class="pagination">
-                            {% if place_page_obj.has_previous %}
-                                <a href="?page_place={{ place_page_obj.previous_page_number }}"> < </a>
-                            {% endif %}
-
-                            {% if place_page_obj.number|add:'-2' > 1 %}
-                                <a href="?page_place={{ place_page_obj.number|add:'-3' }}">&hellip;</a>
-                            {% endif %}
-
-                            {% for i in place_page_obj.paginator.page_range %}
-                                {% if place_page_obj.number == i %}
-                                    <span class="active">{{ i }}</span>
-                                {% elif i > place_page_obj.number|add:'-3' and i < place_page_obj.number|add:'3' %}
-                                    <a href="?page_place={{ i }}">{{ i }}</a>
-                                {% endif %}
-                            {% endfor %}
-
-                            {% if place_page_obj.paginator.num_pages > place_page_obj.number|add:'2' %}
-                                <a href="?page_place={{ place_page_obj.number|add:'3' }}">&hellip;</a>
-                            {% endif %}
-
-                            {% if place_page_obj.has_next %}
-                                <a href="?page_place={{ place_page_obj.next_page_number }}"> ></a>
-                            {% endif %}
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-        {% endif %}
-        {% if favourite_trips.count %}
+        <div class="top-places">
+            <h4>Места</h4>
+            {% include 'users/place_list_like.html' %}
+        </div>
+        {% if trips.count %}
             <div class="top-trips">
                 <h4>Туры</h4>
                 <div>
-                    {% for item in trip_page_obj %}
+                    {% for item in trips %}
                         <div class="block-trip" style="background-image: url('{{ item.trip.image.img.url }}')">
                             <div class="image"></div>
                             <div class="like">
@@ -125,33 +76,6 @@
                         </div>
                     {% endfor %}
                 </div>
-                {% if trip_page_obj.paginator.num_pages != 1 %}
-                    <div class="pagination">
-                        {% if trip_page_obj.has_previous %}
-                            <a href="?page_place={{ trip_page_obj.previous_page_number }}"> < </a>
-                        {% endif %}
-
-                        {% if trip_page_obj.number|add:'-2' > 1 %}
-                            <a href="?page_trip={{ trip_page_obj.number|add:'-3' }}">&hellip;</a>
-                        {% endif %}
-
-                        {% for i in trip_page_obj.paginator.page_range %}
-                            {% if trip_page_obj.number == i %}
-                                <span class="active">{{ i }}</span>
-                            {% elif i > trip_page_obj.number|add:'-3' and i < trip_page_obj.number|add:'3' %}
-                                <a href="?page_trip={{ i }}">{{ i }}</a>
-                            {% endif %}
-                        {% endfor %}
-
-                        {% if trip_page_obj.paginator.num_pages > trip_page_obj.number|add:'2' %}
-                            <a href="?trip_place={{ trip_page_obj.number|add:'3' }}">&hellip;</a>
-                        {% endif %}
-
-                        {% if trip_page_obj.has_next %}
-                            <a href="?trip_place={{ trip_page_obj.next_page_number }}"> ></a>
-                        {% endif %}
-                    </div>
-                {% endif %}
             </div>
         {% endif %}
     </div>
@@ -211,5 +135,7 @@
         })
     }
 </script>
+{% csrf_token %}
+<script src="/static/js/user/pagination.js"></script>
 </body>
 </html>

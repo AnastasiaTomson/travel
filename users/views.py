@@ -49,15 +49,21 @@ def index(request):
 @login_required()
 def favourite(request):
     title = 'Избранное'
-    favourite_places = FavouritePlace.objects.all()
-    favourite_trips = FavouriteTrip.objects.all()
-    place_paginator = Paginator(favourite_places, 4)  # Покажет 4 избранных места при пагинации
-    trip_paginator = Paginator(favourite_trips, 3)  # Покажет 6 избранных туров при пагинации
-    place_page_number = request.GET.get('page_place', 1)
-    place_page_obj = place_paginator.get_page(place_page_number)
-    trip_page_number = request.GET.get('page_trip', 1)
-    trip_page_obj = trip_paginator.get_page(trip_page_number)
-    return render(request, 'users/favourite.html', locals())
+    trips = FavouriteTrip.objects.all()
+    if request.method == 'POST':
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({
+                "result": True,
+                "articles": render_to_string(
+                    request=request,
+                    template_name='users/place_list_like.html',
+                    context={
+                        'places': get_paginated_page(request, FavouritePlace.objects.all(), 5)}
+                )
+            })
+    return render(request=request, template_name='users/favourite.html',
+                  context={'places': get_paginated_page(request, FavouritePlace.objects.all(), 5),
+                           'trips': trips, 'title': title})
 
 
 @login_required()
@@ -142,7 +148,8 @@ def add_my_trip_place(request, id):
                 "articles": render_to_string(
                     request=request,
                     template_name='users/place.html',
-                    context={'places': get_paginated_page(request, Place.objects.exclude(id__in=trip.place_in_trip()), 5)}
+                    context={
+                        'places': get_paginated_page(request, Place.objects.exclude(id__in=trip.place_in_trip()), 5)}
                 )
             })
         else:
@@ -151,7 +158,8 @@ def add_my_trip_place(request, id):
                 UserPlace.objects.create(place=place, trip=trip)
             return HttpResponseRedirect(reverse('my_trip', args={id: id}))
     return render(request=request, template_name='users/add_my_trip_places.html',
-                  context={'places': get_paginated_page(request, Place.objects.exclude(id__in=trip.place_in_trip()), 5), 'id': id})
+                  context={'places': get_paginated_page(request, Place.objects.exclude(id__in=trip.place_in_trip()), 5),
+                           'id': id, 'title': title})
 
 
 @login_required()
