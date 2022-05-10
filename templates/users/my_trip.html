@@ -74,10 +74,9 @@
             <div>
                 <h4>Места</h4>
                 <div>
-                    <a href="{% url 'add_my_trip_place' trip.id %}"><span class="iconify"
-                                                                          data-icon="fluent:add-circle-16-filled"
-                                                                          style="color: #248500; font-size: 25px;"></span></a>
+                    <a href="{% url 'add_my_trip_place' trip.id %}"><span class="iconify" data-icon="fluent:add-12-filled" style="color: #170f49; font-size: 20px;"></span></a>
                     {% if trip.userplace_set.exists %}
+                        &nbsp;
                         <a href="{% url 'edit_my_trip_places' trip.id %}"><span class="iconify"
                                                                                 data-icon="eva:edit-2-fill"
                                                                                 style="color: #170f49; font-size: 20px;"></span></a>
@@ -92,15 +91,23 @@
                         <div class="text">
                             <h5>{{ item.place.title }} ({{ item.place.city }})</h5>
                             <div style="display: flex; align-content: center; gap: 10px">
-                                <span class="iconify" data-icon="akar-icons:calendar"
-                                      style="color: #170f49; font-size: 20px;"></span>
-                                <span>
-                                {% if not item.visit_date %}
-                                    -
+                                {% if item.visit_time and not item.visit_date %}
+                                    <span class="iconify" data-icon="akar-icons:clock"
+                                          style="color: #170f49; font-size: 20px;"></span>
+                                    <span>
+                                        {{ item.visit_time|time:"H:i" }}
+                                    </span>
                                 {% else %}
-                                    {{ item.visit_date|date:"d.m.Y" }} {{ item.visit_time|time:"H:i" }}
+                                    <span class="iconify" data-icon="akar-icons:calendar"
+                                          style="color: #170f49; font-size: 20px;"></span>
+                                    <span>
+                                        {% if not item.visit_date %}
+                                            -
+                                        {% else %}
+                                            {{ item.visit_date|date:"d.m.Y" }} {{ item.visit_time|time:"H:i" }}
+                                        {% endif %}
+                                    </span>
                                 {% endif %}
-                                </span>
                             </div>
                         </div>
                     </div>

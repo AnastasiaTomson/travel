@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet/less" type="text/css" href="/static/fonts/static/font.css">
     <link rel="stylesheet/less" type="text/css" href="/static/css/user/style.less">
+    <link rel="stylesheet/less" type="text/css" href="/static/css/datepicker.css">
     <script src="/static/js/less.js"></script>
     <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
 </head>
@@ -77,7 +78,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="action-row-like">
+                            <div class="action-row-like" style="align-self: start">
                                 <label onclick="ToggleImageDelete(this)" class="checkbox-delete">
                                     <div></div>
                                     {{ foo.DELETE }}
@@ -132,5 +133,40 @@
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/user/calendar.js"></script>
 <script src="/static/js/user/edit-place.js"></script>
+<script src="/static/js/jquery-clock-timepicker.min.js"></script>
+<script type="text/javascript" src="/static/js/user/datepicker/moment.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js"
+        integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/static/js/user/datepicker/datepicker.ru-RU.js"></script>
+<script>
+    $('input[type="time"]').clockTimePicker({
+        colors: {
+            selectorColor: '#0499dd',
+            popupHeaderBackgroundColor: '#0499dd',
+            buttonTextColor: '#0499dd',
+            timeFormat: 'h:i a'
+        },
+        fonts: {
+            buttonFontSize: 18,
+        },
+        i18n: {
+            cancelButton: "Отмена",
+        },
+    });
+
+    var now = Date.now();
+    $('.date').datepicker({
+        format: 'dd.mm.yyyy',
+        language: 'ru-RU',
+        startDate: 'now',
+        filter: function (date, view) {
+            if (date.getDay() === 0 && view === 'day') {
+                return false; // Disable all Sundays, but still leave months/years, whose first day is a Sunday, enabled.
+            }
+        }
+    });
+    $.fn.datepicker.noConflict();
+
+</script>
 </body>
 </html>

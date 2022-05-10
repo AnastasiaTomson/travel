@@ -114,6 +114,15 @@ a {
     border-radius: 30px;
     border: none;
 
+    .create-user-trip-btn {
+      padding: 8px 25px;
+      font-family: 'Montserrat-SemiBold';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 11px;
+    }
+
     h2 {
       font-family: 'Montserrat-SemiBold';
       font-style: normal;
@@ -137,6 +146,7 @@ a {
       > div {
         justify-content: stretch !important;
       }
+
       .block-trip {
         cursor: pointer;
         border: 1px solid #588BD3;
@@ -358,6 +368,7 @@ a {
             height: 20px;
             background: url('/static/img/user/time.svg') no-repeat;
             background-size: contain;
+            z-index: 1000;
           }
         }
 
@@ -1045,6 +1056,7 @@ a {
 
     .calendar {
       position: relative;
+      cursor: pointer;
 
       input {
         border: 1px solid #D4D5DA;
@@ -1098,6 +1110,7 @@ a {
         height: 20px;
         background: url('/static/img/user/time.svg') no-repeat;
         background-size: contain;
+        z-index: 100;
       }
     }
   }
