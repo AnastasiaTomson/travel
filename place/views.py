@@ -6,7 +6,9 @@ from django.http import JsonResponse
 
 
 def index(request):
-    return render(request, 'place/index.html')
+    places = Place.objects.order_by("?").filter(image__isnull=False).distinct()[:12]
+    images = Image.objects.all().order_by("?")[:12]
+    return render(request, 'place/index.html', locals())
 
 
 class ChangeFavouritePlace(View):

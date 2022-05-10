@@ -3,8 +3,278 @@
 <head>
     <meta charset="UTF-8">
     <title>Места</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet/less" type="text/css" href="/static/fonts/static/font.css">
+    <link rel="stylesheet/less" type="text/css" href="/static/css/place/style.less">
+    <script src="/static/js/less.js"></script>
 </head>
 <body>
+<section class="slider">
+    <section class="navbar">
+        <div class="max-content margin">
+            <a href="{% url 'front' %}"><img src="/static/img/front/logo.svg" alt="" height="40"></a>
+            <div class="menu">
+                <a href="{% url 'front' %}" class="active">Главная</a>
+                <a href="">Туры</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'user' %}" class="profile">
+                        <div style="display: inline-block; background-size: cover; background-position: center;width:35px; height: 35px; border: none; border-radius: 100%; background-image: url('{{ user.image.url }}')"></div>
+                        <span style="vertical-align: center">{{ user.name }}</span>
+                    </a>
+                    <a href="{% url 'logout_user' %}"><img src="/static/img/front/exit.png" alt=""></a>
+                {% else %}
+                    <p onclick="ShowAuthorization()">Личный кабинет</p>
+                {% endif %}
+            </div>
+        </div>
 
+    </section>
+
+    <div class="slide"></div>
+    <div class="max-content">
+        <div class="slide-title max-content">
+            <div class="slide-left-box">
+                <div class="slide-title-text">
+                    <h2>КАТАЛОГ МЕСТ</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="personal-trip-form max-content">
+        <h3>Найдите подходящий тур</h3>
+        <form action="">
+            <div class="custom-input">
+                <input type="text" value="Абхазия">
+            </div>
+            <input type="text" value="Лето">
+            <input type="text" value="Активный отдых">
+            <button class="button">Найти</button>
+        </form>
+    </div>
+    <div class="content-place">
+        <div class="left-filters-menu max-content">
+        <h3>Фильтры</h3>
+        <form action="">
+            <div class="season">
+                <div class="season-check">
+                    <p>Сезон</p>
+                    <div class="line">___</div>
+                </div>
+                <div class="season-drop-block">
+                    <div class="group-items">
+                        <div class="form_radio_btn">
+                            <input  id="radio-season-1" type="radio" name="season-group" value="Зима">
+                            <label for="radio-season-1">Зима</label>
+                        </div>
+                        <div class="form_radio_btn">
+                            <input id="radio-season-2" type="radio" name="season-group" value="Весна">
+                            <label for="radio-season-2">Весна</label>
+                        </div>
+                        <div class="form_radio_btn">
+                            <input id="radio-season-3" type="radio" name="season-group" value="Лето">
+                            <label for="radio-season-3">Лето</label>
+                        </div>
+                    </div>
+                    <div class="group-items">
+                        <div class="form_radio_btn">
+                            <input id="radio-season-4" type="radio" name="season-group" value="Осень">
+                            <label for="radio-season-4">Осень</label>
+                        </div>
+                        <div class="form_radio_btn">
+                            <input id="radio-season-5" type="radio" name="season-group" value="Круглый год">
+                            <label for="radio-season-5">Круглый год</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="city">
+                <div class="city-check">
+                    <p>Город</p>
+                    <div class="line">___</div>
+                </div>
+                <div class="city-drop-block">
+                    <div class="city-group-items">
+                        <div class="city-form_radio_btn">
+                            <input id="radio-city-1" type="radio" name="city-group" value="Ялта">
+                            <label for="radio-city-1">Ялта</label>
+                        </div>
+                        <div class="city-form_radio_btn">
+                            <input id="radio-city-2" type="radio" name="city-group" value="Керчь">
+                            <label for="radio-city-2">Керчь</label>
+                        </div>
+                        <div class="city-form_radio_btn">
+                            <input id="radio-city-3" type="radio" name="city-group" value="Евпатория">
+                            <label for="radio-city-3">Евпатория</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="type-place">
+                <div class="type-place-check">
+                    <p>Тип места</p>
+                    <div class="line">___</div>
+                </div>
+                <div class="type-place-drop-block">
+                    <div class="group-items">
+                        <div class="form_radio_btn">
+                            <input id="radio-type-place-1" type="radio" name="type-place-group" value="Музеи">
+                            <label for="radio-type-place-1">Музеи</label>
+                        </div>
+                        <div class="form_radio_btn">
+                            <input id="radio-type-place-2" type="radio" name="type-place-group" value="Пляжи">
+                            <label for="radio-type-place-2">Пляжи</label>
+                        </div>
+                        <div class="form_radio_btn">
+                            <input id="radio-type-place-3" type="radio" name="type-place-group" value="Галереи">
+                            <label for="radio-type-place-3">Галереи</label>
+                        </div>
+                    </div>
+                     <div class="group-items">
+                        <div class="form_radio_btn">
+                            <input id="radio-type-place-4" type="radio" name="type-place-group" value="Горы">
+                            <label for="radio-type-place-4">Горы</label>
+                        </div>
+                        <div class="form_radio_btn">
+                            <input id="radio-type-place-5" type="radio" name="type-place-group" value="Для прогулок">
+                            <label for="radio-type-place-5">Для прогулок</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tags">
+                <div class="tags-check">
+                    <p>Тэги</p>
+                    <div class="line">___</div>
+                </div>
+                <div class="tags-drop-block">
+                     <div class="group-items">
+                        <div class="form_radio_btn">
+                            <input id="radio-tags-1" type="radio" name="tags-group" value="Музеи">
+                            <label for="radio-tags-1">Музеи</label>
+                        </div>
+                        <div class="form_radio_btn">
+                            <input id="radio-tags-2" type="radio" name="tags-group" value="Пляжи">
+                            <label for="radio-tags-2">Пляжи</label>
+                        </div>
+                        <div class="form_radio_btn">
+                            <input id="radio-tags-3" type="radio" name="tags-group" value="Галереи">
+                            <label for="radio-tags-3">Галереи</label>
+                        </div>
+                    </div>
+                     <div class="group-items">
+                        <div class="form_radio_btn">
+                            <input id="radio-tags-4" type="radio" name="tags-group" value="Горы">
+                            <label for="radio-tags-4">Горы</label>
+                        </div>
+                        <div class="form_radio_btn">
+                            <input id="radio-tags-5" type="radio" name="tags-group" value="Для прогулок">
+                            <label for="radio-tags-5">Для прогулок</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="button">Показать</button>
+{#            <input type="text-button" value="Сбросить фильтры">#}
+        </form>
+    </div>
+    <div class="popular-place max-content">
+     <div class="title-block"><h3>Места</h3></div>
+     <div class="popular-places">
+            {% for place in places %}
+                <div class="block-place" style="background-image: url('{{ place.one_image.img.url }}')">
+                    <div class="image"></div>
+                    <div class="block-content-place">
+                        <h5>{{ place.title }}</h5>
+                        <div class="place-action">
+                            <a href="">
+                                <button>Подробнее</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    </div>
+{#    <div class="lift-of-places">#}
+{#        {% for item in place_page_obj %}#}
+{#        <div class="group-items-place">#}
+{#            <div class="card-place">#}
+{#                <h3>Фильтры</h3>#}
+{#                <div class="image"#}
+{#                     style="background-image: url('{{ item.place.one_image.img.url }}')"></div>#}
+{#            </div>#}
+{#            <div class="card-place">#}
+{#                <h3>Фильтры</h3>#}
+{#                <div class="image"#}
+{#                     style="background-image: url('{{ item.place.one_image.img.url }}')"></div>#}
+{#            </div>#}
+{#            <div class="card-place">#}
+{#                <h3>Фильтры</h3>#}
+{#                <div class="image"#}
+{#                     style="background-image: url('{{ item.place.one_image.img.url }}')"></div>#}
+{#            </div>#}
+{#            <div class="card-place">#}
+{#                <h3>Фильтры</h3>#}
+{#                <div class="image"#}
+{#                     style="background-image: url('{{ item.place.one_image.img.url }}')"></div>#}
+{#            </div>#}
+{#            <div class="card-place">#}
+{#                <h3>Фильтры</h3>#}
+{#                <div class="image"#}
+{#                     style="background-image: url('{{ item.place.one_image.img.url }}')"></div>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#    </div>#}
+
+
+</section>
+
+<section class="footer">
+    <div class="max-content footer-content">
+        <div class="footer-block">
+            <a href="{% url 'index' %}">Главная</a>
+            <a href="">Туры</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'edit_profile' %}">Личный кабинет</a>
+            {% else %}
+                <p onclick="ShowAuthorization()">Личный кабинет</p>
+            {% endif %}
+        </div>
+        <div class="footer-block">
+            <a href="" class="icon tg">+7 978 701 31 02</a>
+            <a href="" class="icon tg">+7 978 701 31 02</a>
+        </div>
+        <div class="footer-block">
+            <a href="" class="icon mail">office_windtravel@mail.ru</a>
+            <a href=""><img src="/static/img/front/vkF.svg" alt=""></a>
+        </div>
+    </div>
+</section>
+{% block modalwindow %}
+    <section class="modal-block">
+        <div class="modal-window login-form">
+            <h4>Авторизация</h4>
+            <form action="{% url 'login_user' %}" method="post">
+                {% csrf_token %}
+                <label for="">
+                    <input type="text" name="email" placeholder="Логин">
+                </label>
+                <label for="" class="password">
+                    <input type="password" name="password1" placeholder="Пароль">
+                    <img src="/static/img/front/eye.png" alt="">
+                </label>
+                <button>Войти</button>
+            </form>
+            <a href="{% url 'register' %}">Зарегистрироваться</a>
+        </div>
+    </section>
+{% endblock %}
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/front/authorization.js"></script>
 </body>
 </html>
