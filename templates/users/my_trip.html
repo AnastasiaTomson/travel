@@ -43,8 +43,9 @@
     <div class="content">
         <div style="display: flex; justify-content: space-between;">
             <h2>Просмотр тура</h2>
-            <a href="{% url 'delete_user_trip' trip.id %}"><span class="iconify"
-                                                                 data-icon="akar-icons:trash-can"></span></a>
+            <a href="">
+                <img src="/static/img/user/exportTrip.svg" alt="">
+            </a>
         </div>
         <div class="my-trip white-block">
             <div>
@@ -74,7 +75,9 @@
             <div>
                 <h4>Места</h4>
                 <div>
-                    <a href="{% url 'add_my_trip_place' trip.id %}"><span class="iconify" data-icon="fluent:add-12-filled" style="color: #170f49; font-size: 20px;"></span></a>
+                    <a href="{% url 'add_my_trip_place' trip.id %}"><span class="iconify"
+                                                                          data-icon="fluent:add-12-filled"
+                                                                          style="color: #170f49; font-size: 20px;"></span></a>
                     {% if trip.userplace_set.exists %}
                         &nbsp;
                         <a href="{% url 'edit_my_trip_places' trip.id %}"><span class="iconify"
@@ -113,6 +116,11 @@
                     </div>
                 {% endfor %}
             </div>
+        </div>
+        <div class="step-action" style="justify-content: end">
+            <a href="{% url 'delete_user_trip' trip.id %}">
+                <button class="last">Удалить тур</button>
+            </a>
         </div>
     </div>
 

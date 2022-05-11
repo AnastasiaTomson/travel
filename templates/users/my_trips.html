@@ -62,33 +62,6 @@
                     </a>
                 {% endfor %}
             </div>
-            {% if trips_page_obj.paginator.num_pages != 1 %}
-                <div class="pagination">
-                    {% if trips_page_obj.has_previous %}
-                        <a href="?page_place={{ trips_page_obj.previous_page_number }}"> < </a>
-                    {% endif %}
-
-                    {% if trips_page_obj.number|add:'-2' > 1 %}
-                        <a href="?page_trip={{ trips_page_obj.number|add:'-3' }}">&hellip;</a>
-                    {% endif %}
-
-                    {% for i in trips_page_obj.paginator.page_range %}
-                        {% if trips_page_obj.number == i %}
-                            <span class="active">{{ i }}</span>
-                        {% elif i > trips_page_obj.number|add:'-3' and i < trips_page_obj.number|add:'3' %}
-                            <a href="?page_trip={{ i }}">{{ i }}</a>
-                        {% endif %}
-                    {% endfor %}
-
-                    {% if trips_page_obj.paginator.num_pages > trips_page_obj.number|add:'2' %}
-                        <a href="?trip_place={{ trips_page_obj.number|add:'3' }}">&hellip;</a>
-                    {% endif %}
-
-                    {% if trips_page_obj.has_next %}
-                        <a href="?trip_place={{ trips_page_obj.next_page_number }}"> ></a>
-                    {% endif %}
-                </div>
-            {% endif %}
         </div>
     </div>
 

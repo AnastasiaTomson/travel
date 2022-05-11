@@ -1,4 +1,4 @@
-function ClickStep(obj, num) {
+function ClickStep(num) {
     let $parent = $('.create-user-trip')
     $parent.find(`.step-block`).hide()
     $parent.find(`.step-block-${num}`).show()
@@ -23,19 +23,37 @@ function ClickStep(obj, num) {
     }
     $parent.find(`.line-${num}`).addClass('active')
     $(`.steps > span:gt(${num - 1})`).removeClass('active')
-    $(obj).addClass('active')
+    $parent.find(`.step-${num}`).addClass('active')
     $('.next').attr('onclick', `NextStep(${num + 1})`)
     $('.last').attr('onclick', `LastStep(${num - 1})`)
 }
 
 function NextStep(num) {
-    $('.step-' + num).click()
+    if ($('input[name="title"]').val() === ''){
+        $('.next').attr('disabled', true)
+        $('input[name="title"]').css('border', '1px solid #C60000')
+        $('input[name="title"]').attr('placeholder', 'Обязательное поле')
+    }else {
+        ClickStep(num)
+    }
 }
 
 function LastStep(num) {
-    $('.step-' + num).click()
+    ClickStep(num)
 }
 
 $(document).ready(function () {
-    $('span.active').click()
+    ClickStep(1)
+})
+
+$('input[name="title"]').on('change', function (){
+    if ($(this).val() === ''){
+        $('.next').attr('disabled', true)
+        $(this).css('border', '1px solid #C60000')
+        $(this).attr('placeholder', 'Обязательное поле')
+    }else{
+        $('.next').removeAttr('disabled')
+        $(this).css('border', '1px solid #D4D5DA')
+        $(this).attr('placeholder', '')
+    }
 })

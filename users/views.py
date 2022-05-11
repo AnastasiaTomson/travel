@@ -110,18 +110,10 @@ def delete_user_trip(request, id):
 def edit_my_trip_places(request, id):
     trip = UserTrip.objects.get(id=id)
     title = trip.title
-    places = Place.objects.exclude(id__in=trip.place_in_trip())
-    place_paginator = Paginator(places, 6)
-    place_page_number = request.GET.get('page_place', 1)
-    place_page_obj = place_paginator.get_page(place_page_number)
     formset = ChildrenFormset(request.POST if request.POST else None, instance=trip)
     if request.method == 'POST':
         if formset.is_valid():
             formset.save()
-            try:
-                del request.session['id_places']
-            except KeyError:
-                pass
             return HttpResponseRedirect(reverse('my_trip', args={id: id}))
     return render(request, 'users/edit_my_trip_places.html', locals())
 
