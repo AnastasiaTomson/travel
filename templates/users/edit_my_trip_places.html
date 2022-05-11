@@ -44,8 +44,6 @@
     <div class="content">
         <form action="{% url 'edit_my_trip_places' id %}" id="form" method="post">
             {% csrf_token %}
-            {{ formset.management_form }}
-            {{ formset.non_form_errors }}
             <div style="display: flex; justify-content: space-between;">
                 <h2>Просмотр тура</h2>
             </div>

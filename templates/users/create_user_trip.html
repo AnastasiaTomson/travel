@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet/less" type="text/css" href="/static/fonts/static/font.css">
     <link rel="stylesheet/less" type="text/css" href="/static/css/user/style.less">
+    <link rel="stylesheet/less" type="text/css" href="/static/css/datepicker.css">
     <script src="/static/js/less.js"></script>
     <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
     <meta name="http-equiv" content="Content-type: text/html; charset=UTF-8">
@@ -41,6 +42,7 @@
             </a>
         </div>
     </div>
+
     <div class="content">
         <div style="display: flex; justify-content: space-between;">
             <h2>Создать тур</h2>
@@ -126,47 +128,11 @@
                         </div>
                     {% endif %}
                 </div>
-                <div class="third-step-block step-block step-block-3">
+
+                <div class="third-step-block step-block step-block-3 my-trip">
                     <h4>Планирование</h4>
                     <span>Распланируйте по дням свое путешествие</span>
-                    {#                    {% for child_form in formset.forms %}#}
-                    {#                        {{ child_form }}#}
-                    {#                    {% endfor %}#}
-                    <div class="block-place">
-                        <input name="userplace_set-0-place" id="id_userplace_set-0-place" hidden>
-                        <div class="image"></div>
-                        <div class="text">
-                            <h5></h5>
-                            <p></p>
-                        </div>
-                        <div class="add-date">
-                            <div class="check-date">
-                                <p>Указать дату
-                                    <label class="switch">
-                                        <input type="checkbox" class="switch-date">
-                                        <span class="slider round"></span>
-                                    </label>
-                                </p>
-                                <p>свернуть</p>
-                            </div>
-                            <div class="drop-block">
-                                <label for="">
-                                    <p>Дата посещения</p>
-                                    <div class="calendar">
-                                        <input type="date" name="userplace_set-0-visit_date"
-                                               id="id_userplace_set-0-visit_date">
-                                    </div>
-                                </label>
-                                <label for="">
-                                    <p>Время посещения</p>
-                                    <div class="clock">
-                                        <input type="time" name="userplace_set-0-visit_time"
-                                               id="id_userplace_set-0-visit_time">
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
+                    {% include 'users/places_with_date.html' %}
                 </div>
                 <div class="fourth-step-block step-block step-block-4">
                     <img src="/static/img/user/last_step.svg" alt="">
@@ -229,6 +195,11 @@
 
 <script src="/static/js/jquery.min.js"></script>
 
+<script src="/static/js/jquery-clock-timepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js"
+        integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/static/js/user/datepicker/moment.js"></script>
+<script type="text/javascript" src="/static/js/user/datepicker/datepicker.ru-RU.js"></script>
 <script src="https://malsup.github.io/jquery.form.js"></script>
 <script src="/static/js/user/calendar.js"></script>
 <script src="/static/js/user/step.js"></script>

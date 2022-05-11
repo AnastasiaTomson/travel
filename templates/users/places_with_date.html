@@ -1,0 +1,32 @@
+<div class="places-pagination">
+    {{ formset.management_form }}
+    {{ formset.non_form_errors }}
+    {% for foo in formset.forms %}
+        <div class="block-place">
+            <div class="hidden">
+                {{ foo.place }}
+                {{ foo.id }}
+            </div>
+            <div class="image"
+                 style="background-image: url('{{ foo.initial.place.one_image.img.url }}')"></div>
+            <div class="text">
+                <h5>{{ foo.initial.place.title }}</h5>
+                <p>Город: {{ foo.initial.place.city }}</p>
+                <div class="add-date-to-place">
+                    <label for="{{ foo.visit_date.id_for_label }}">
+                        <p>Дата посещения</p>
+                        <div class="calendar">
+                            {{ foo.visit_date }}
+                        </div>
+                    </label>
+                    <label for="{{ foo.visit_time.id_for_label }}">
+                        <p>Время посещения</p>
+                        <div class="clock">
+                            {{ foo.visit_time }}
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

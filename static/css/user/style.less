@@ -3,6 +3,10 @@
   padding: 0;
 }
 
+.hidden {
+  display: none;
+}
+
 // Переменные
 :root {
   --accent-color: #FFC700;
@@ -311,32 +315,27 @@ a {
       grid-template-columns: 1fr 10fr 1fr;
       grid-gap: 13px;
 
-      .add-date {
-        grid-column: ~'1/4';
-        background: #FFFFFF;
-        border: 1px solid rgba(217, 219, 233, 0.5);
-        box-shadow: 0 2px 6px rgba(19, 18, 66, 0.07);
-        border-radius: 4px;
-        padding: 10px 5px;
+      .add-date-to-place {
+        display: flex;
+        gap: 10px;
+        justify-content: space-between;
 
-        .drop-block {
-          //display: none;
+        p {
+          font-family: 'Montserrat-Medium';
+          font-style: normal;
+          font-weight: 500;
+          font-size: 14px !important;
+          line-height: 17px;
+          color: #170F49 !important;
+          margin-bottom: 8px;
         }
 
-        form {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: center;
-          gap: 15px;
-          margin-top: 0 !important;
-        }
+        label {
+          margin-top: 0;
 
-        .check-date {
-          display: flex;
-          justify-content: space-between;
-          border: none;
-          border-bottom: 0.5px solid #D9DBE9;
-          padding: 5px 0;
+          input {
+            padding: 8px 5px 8px 30px;
+          }
         }
 
         .calendar {
@@ -372,6 +371,10 @@ a {
           }
         }
 
+        input {
+          padding: 8px 5px 8px 20px;
+        }
+
         p {
           font-family: 'Montserrat-Medium';
           font-style: normal;
@@ -397,64 +400,6 @@ a {
           width: 30px;
           height: 20px;
           margin-left: 15px;
-        }
-
-        /* Hide default HTML checkbox */
-
-        .switch input {
-          opacity: 0;
-          width: 0;
-          height: 0;
-        }
-
-        /* The slider */
-
-        .slider {
-          position: absolute;
-          cursor: pointer;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background-color: #ccc;
-          -webkit-transition: .4s;
-          transition: .4s;
-        }
-
-        .slider:before {
-          position: absolute;
-          content: "";
-          height: 16px;
-          width: 16px;
-          left: 2px;
-          bottom: 2px;
-          background-color: white;
-          -webkit-transition: .4s;
-          transition: .4s;
-        }
-
-        input:checked + .slider {
-          background-color: #4A3AFF;
-        }
-
-        input:focus + .slider {
-          box-shadow: 0 0 1px #4A3AFF;
-        }
-
-        input:checked + .slider:before {
-          -webkit-transform: translateX(10px);
-          -ms-transform: translateX(10px);
-          transform: translateX(10px);
-        }
-
-        /* Rounded sliders */
-
-        .slider.round {
-          border-radius: 34px;
-        }
-
-        .slider.round:before {
-          border-radius: 50%;
         }
       }
 
@@ -979,7 +924,7 @@ a {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    margin-top: 15px;
+    //margin-top: 15px;
 
     span {
       font-family: 'Montserrat-Regular';
@@ -1029,9 +974,6 @@ a {
 
   .edit-my-trip-place {
     .block-place {
-      .hidden {
-        display: none;
-      }
 
       .text {
         > div {

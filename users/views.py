@@ -161,6 +161,33 @@ def add_my_trip_place(request, id):
                   context={'places': get_paginated_page(request, Place.objects.exclude(id__in=trip.place_in_trip()), 5),
                            'id': id, 'title': title})
 
+from django.forms.models import model_to_dict
+@login_required()
+def set_formset_user_trip(request):
+    if request.method == 'POST':
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            ChildrenFormset1 = inlineformset_factory(UserTrip, UserPlace, fields='__all__', can_delete=True,
+                                                     extra=len(request.session['id_places']),
+                                                     widgets={
+                                                         'visit_date': forms.DateInput(attrs={'class': 'date'},
+                                                                                       format='%d.%m.%Y'),
+                                                         'visit_time': forms.TimeInput(attrs={'type': 'time', 'class': 'time'},
+                                                                                       format='%H:%M'),
+                                                         'place': forms.NumberInput(),
+                                                     })
+            pl_session = Place.objects.filter(id__in=request.session['id_places'])
+            formset = ChildrenFormset1()
+            for i, p in enumerate(pl_session):
+                formset.forms[i].initial['place'] = p
+            return JsonResponse({
+                "result": True,
+                "articles": render_to_string(
+                    request=request,
+                    template_name='users/places_with_date.html',
+                    context={'formset': formset}
+                )
+            })
+
 
 @login_required()
 def create_user_trip(request):
@@ -186,8 +213,9 @@ def create_user_trip(request):
         place_paginator = Paginator(places, 5)
         place_page_number = request.GET.get('page_place', 1)
         place_page_obj = place_paginator.get_page(place_page_number)
-        formset = ChildrenFormset()
-    return render(request, 'users/create_user_trip.html', locals())
+        return render(request=request, template_name='users/create_user_trip.html',
+                      context={'user_trip_form': user_trip_form, 'place_page_obj': place_page_obj,
+                               'title': title})
 
 
 def register_user(request):
