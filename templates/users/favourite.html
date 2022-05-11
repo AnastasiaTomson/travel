@@ -54,11 +54,11 @@
                             <div class="image"></div>
                             <div class="like">
                                 {% if item.trip.favouritetrip_set.count != 0 %}
-                                    <img onclick="CheckFavouritePlace(this, {{ item.trip.id }})"
+                                    <img onclick="CheckFavouriteTrip(this, {{ item.trip.id }})"
                                          src="/static/img/front/like-active.svg" alt=""
                                          height="40px">
                                 {% else %}
-                                    <img onclick="CheckFavouritePlace(this, {{ item.trip.id }})"
+                                    <img onclick="CheckFavouriteTrip(this, {{ item.trip.id }})"
                                          src="/static/img/front/like.svg" alt="">
                                 {% endif %}
                             </div>
@@ -82,7 +82,7 @@
 
     <div class="right-sidebar">
         <div class="user-icon-profile">
-            <a href="">
+            <a href="{% url 'user_profile' %}">
                 <div class="icon" style="background-image: url('{{ user.image.url }}')"></div>
                 <div class="name-logo">
                     <p class="name">{{ user.last_name }} {{ user.name }}</p>
@@ -116,26 +116,10 @@
     </div>
 </div>
 
+{% csrf_token %}
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/user/calendar.js"></script>
-<script>
-    function CheckFavouritePlace(obj, id) {
-        $.ajax({
-            url: '/place/favourite_place/' + id,
-            type: 'GET',
-            success: function (response) {
-                if (response.status) {
-                    if (response.type === 'active') {
-                        $(obj).attr('src', '/static/img/user/like-active.svg')
-                    } else {
-                        $(obj).attr('src', '/static/img/user/like.svg')
-                    }
-                }
-            }
-        })
-    }
-</script>
-{% csrf_token %}
 <script src="/static/js/user/pagination.js"></script>
+<script src="/static/js/front/favourite.js"></script>
 </body>
 </html>

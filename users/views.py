@@ -222,6 +222,12 @@ def register_user(request):
 
 
 @login_required()
+def user_profile(request):
+    user = MyUser.objects.get(id=request.user.id)
+    return render(request, 'users/user_profile.html', locals())
+
+
+@login_required()
 def edit_profile(request):
     user = MyUser.objects.get(id=request.user.id)
     if request.method == 'POST':
@@ -231,7 +237,7 @@ def edit_profile(request):
             return HttpResponseRedirect(reverse('front'))
     else:
         form = UserCreationForm(instance=user)
-    return render(request, 'users/user.html', locals())
+    return render(request, 'users/user_profile.html', locals())
 
 
 def set_cache(request):

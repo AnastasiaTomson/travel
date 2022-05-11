@@ -11,10 +11,10 @@
             <div class="action-row-like">
                 {% if item.place.favouriteplace_set.count != 0 %}
                     <img onclick="CheckFavouritePlace(this, {{ item.place.id }})"
-                         src="/static/img/user/like-active.svg" alt="">
+                         src="/static/img/front/like-active.svg" alt="" height="40px">
                 {% else %}
                     <img onclick="CheckFavouritePlace(this, {{ item.place.id }})"
-                         src="/static/img/user/like.svg" alt="">
+                         src="/static/img/front/like.svg" alt="" height="40px">
                 {% endif %}
             </div>
         </div>

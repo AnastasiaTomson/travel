@@ -58,7 +58,7 @@
 
     <div class="right-sidebar">
         <div class="user-icon-profile">
-            <a href="">
+            <a href="{% url 'user_profile' %}">
                 <div class="icon" style="background-image: url('{{ user.image.url }}')"></div>
                 <div class="name-logo">
                     <p class="name">{{ user.last_name }} {{ user.name }}</p>
