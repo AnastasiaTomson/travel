@@ -11,6 +11,7 @@ urlpatterns = [
     path('edit_my_trip_places/<int:id>', edit_my_trip_places, name='edit_my_trip_places'),
     path('add_my_trip_place/<int:id>', add_my_trip_place, name='add_my_trip_place'),
     path('create_user_trip/', create_user_trip, name='create_user_trip'),
+    path('create_trip_add_place/', create_trip_add_place, name='create_trip_add_place'),
     path('set_formset_user_trip/', set_formset_user_trip, name='set_formset_user_trip'),
     path('place_get/', PlaceGet.as_view(), name="place_get"),
     path('register/', register_user, name='register'),
@@ -19,5 +20,6 @@ urlpatterns = [
     path('edit_user_profile/', edit_user_profile, name='edit_user_profile'),
     path('edit_password_user_profile/', edit_password_user_profile, name='edit_password_user_profile'),
     path('logout_user/', logout_user, name='logout_user'),
-    path('set_cache/', set_cache, name='set_cache')
+    path('set_cache/', set_cache, name='set_cache'),
+    path('add_place_to_trip/', add_place_to_trip, name='add_place_to_trip')
 ]

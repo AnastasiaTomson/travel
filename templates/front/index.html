@@ -181,7 +181,7 @@
             <a href="{% url 'index' %}">Главная</a>
             <a href="">Туры</a>
             {% if user.is_authenticated %}
-                <a href="{% url 'edit_profile' %}">Личный кабинет</a>
+                <a href="{% url 'user' %}">Личный кабинет</a>
             {% else %}
                 <p onclick="ShowAuthorization()">Личный кабинет</p>
             {% endif %}
@@ -215,17 +215,44 @@
             <a href="{% url 'register' %}">Зарегистрироваться</a>
         </div>
         <div class="modal-window add-to-trip">
+            {% csrf_token %}
             <h4>Добавить место в тур</h4>
             <div>
                 <span>Созданные туры</span>
                 <div class="trips">
-                    <div>
-                        <div class="image"></div>
-                        <p>ттжжи</p>
-                        <div>Добавить</div>
+                    {% for trip in user_trips %}
+                        <div>
+                            <div class="image" style="background-image: url('{{ trip.image.img.url }}')"></div>
+                            <div>
+                                <p>{{ trip.title|truncatechars:15 }}</p>
+                                <button onclick="AddPlaceToTripModal(this, {{ trip.id }})">Добавить</button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="create-trip" onclick="CreateTripModal(this, $('.add-to-trip').attr('data-id_place'))">
+                        <img src="/static/img/front/create_add.svg" alt="">
+                        Создать тур
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="modal-window create-trip">
+            <h4>Создать тур</h4>
+            <form id="trip-form" action="{% url 'create_trip_add_place' %}" method="post">
+                {% csrf_token %}
+                <div class="hidden">
+                    <input type="text" name="place_id">
+                </div>
+                <label for="{{ user_trip_form.title.id_for_label }}">
+                    <p>{{ user_trip_form.title.label }}</p>
+                    {{ user_trip_form.title }}
+                </label>
+                <label for="{{ user_trip_form.description.id_for_label }}">
+                    <p>{{ user_trip_form.description.label }}</p>
+                    {{ user_trip_form.description }}
+                </label>
+                <button class="save-btn">Сохранить</button>
+            </form>
         </div>
     </section>
 {% endblock %}

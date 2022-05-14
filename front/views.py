@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from trip.models import *
+from trip.form import UserTripForm
 from place.models import *
 from django.shortcuts import redirect
 from django.views.decorators.http import require_http_methods
@@ -10,6 +11,8 @@ from travel import settings
 def front(request):
     places = Place.objects.order_by("?").filter(image__isnull=False).distinct()[:8]
     trips = Trip.objects.all().order_by("?")[:3]
+    user_trips = UserTrip.objects.all()
+    user_trip_form = UserTripForm(request_user=request.user)
     images = Image.objects.all().order_by("?")[:8]
     return render(request, 'front/index.html', locals())
 

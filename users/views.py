@@ -164,8 +164,9 @@ def set_formset_user_trip(request):
                                                      widgets={
                                                          'visit_date': forms.DateInput(attrs={'class': 'date'},
                                                                                        format='%d.%m.%Y'),
-                                                         'visit_time': forms.TimeInput(attrs={'type': 'time', 'class': 'time'},
-                                                                                       format='%H:%M'),
+                                                         'visit_time': forms.TimeInput(
+                                                             attrs={'type': 'time', 'class': 'time'},
+                                                             format='%H:%M'),
                                                          'place': forms.NumberInput(),
                                                      })
             pl_session = Place.objects.filter(id__in=request.session['id_places'])
@@ -279,3 +280,26 @@ class PlaceGet(generics.ListAPIView):
     def get_queryset(self):
         places = Place.objects.filter(id__in=self.request.session['id_places'])
         return places
+
+
+def add_place_to_trip(request):
+    if request.method == 'POST':
+        trip_id = request.POST.get('trip_id')
+        place_id = request.POST.get('place_id')
+        place = Place.objects.get(id=place_id)
+        trip = UserTrip.objects.get(id=trip_id)
+        if not UserPlace.objects.filter(trip=trip, place=place).exists():
+            UserPlace.objects.create(trip=trip, place=place)
+            return JsonResponse({"result": True, })
+
+
+def create_trip_add_place(request):
+    if request.method == 'POST':
+        form = UserTripForm(request.POST, request_user=request.user)
+        if form.is_valid():
+            user_trip = form.save()
+            place_id = request.POST.get('place_id')
+            place = Place.objects.get(id=place_id)
+            if not UserPlace.objects.filter(trip=user_trip, place=place).exists():
+                UserPlace.objects.create(trip=user_trip, place=place)
+                return HttpResponseRedirect(reverse('front'))
