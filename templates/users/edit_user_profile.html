@@ -40,58 +40,45 @@
         </div>
     </div>
     <div class="content">
-        <div style="display: flex; justify-content: space-between;">
+        <div class="title">
             <h2>Мой профиль</h2>
-            <a href="{% url 'edit_user_profile' %}" class="btn edit-btn">
-                <span class="iconify" data-icon="eva:edit-2-fill"
-                      style="color: #FFFFFF; font-size: 20px;"></span>
-                Редактировать
-            </a>
+            <span>Редактирование основной информации</span>
         </div>
-        <div class="profile">
-            <div style="background-image: url('{{ user.image.url }}')" class="user-photo"></div>
-            <div class="user-info">
+        <form action="{% url 'edit_user_profile' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="profile">
                 <div>
-                    <h4>Фамилия</h4>
-                    <div>{{ user.last_name }}</div>
-                </div>
-                <div>
-                    <h4>Имя</h4>
-                    <div>{{ user.name }}</div>
-                </div>
-                <div>
-                    <h4>Отчество</h4>
-                    <div>{{ user.fathername }}</div>
-                </div>
-                <div>
-                    <h4>Электронная почта (логин)</h4>
-                    <div>{{ user.email }}</div>
-                </div>
-                <div>
-                    <h4>Пароль</h4>
-                    <div style="display:flex; justify-content: space-between">
-                        <div>
-                        <span class="iconify" data-icon="fa6-solid:star-of-life"
-                              style="color: #5b5b5b; font-size: 6px;"></span>
-                            <span class="iconify" data-icon="fa6-solid:star-of-life"
-                                  style="color: #5b5b5b; font-size: 6px;"></span>
-                            <span class="iconify" data-icon="fa6-solid:star-of-life"
-                                  style="color: #5b5b5b; font-size: 6px;"></span>
-                            <span class="iconify" data-icon="fa6-solid:star-of-life"
-                                  style="color: #5b5b5b; font-size: 6px;"></span>
-                            <span class="iconify" data-icon="fa6-solid:star-of-life"
-                                  style="color: #5b5b5b; font-size: 6px;"></span>
+                    <label for="{{ form.image.id_for_label }}">
+                        <p>{{ form.errors }}</p>
+                        <div id="image" style="background-image: url('{{ user.image.url }}')" class="user-photo"></div>
+                        <div class="hidden">
+                            {{ form.image }}
                         </div>
-
-                        <a href="{% url 'edit_password_user_profile' %}">
-                        <span class="iconify" data-icon="eva:edit-2-fill"
-                              style="color: #251E54; font-size: 20px;"></span>
-                        </a>
+                    </label>
+                </div>
+                <div class="user-info">
+                    <div>
+                        <h4>Фамилия</h4>
+                        <div>{{ form.last_name }}</div>
+                    </div>
+                    <div>
+                        <h4>Имя</h4>
+                        <div>{{ form.name }}</div>
+                    </div>
+                    <div>
+                        <h4>Отчество</h4>
+                        <div>{{ form.fathername }}</div>
+                    </div>
+                    <div>
+                        <h4>Электронная почта (логин)</h4>
+                        <div>{{ form.email }}</div>
                     </div>
                 </div>
+                <div class="save-btn" style="grid-column: 1/3">
+                    <button class="btn">Сохранить</button>
+                </div>
             </div>
-        </div>
-
+        </form>
     </div>
 
     <div class="right-sidebar">
@@ -132,6 +119,6 @@
 
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/user/calendar.js"></script>
-<script src="/static/js/front/favourite.js"></script>
+<script src="/static/js/custom-input-image.js"></script>
 </body>
 </html>

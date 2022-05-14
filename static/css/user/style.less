@@ -17,6 +17,15 @@ a {
   cursor: pointer;
 }
 
+.errorlist {
+  li {
+    list-style: none;
+    color: #0499DD;
+    font-family: 'Montserrat-SemiBold';
+    font-size: 16px;
+  }
+}
+
 .btn {
   background: linear-gradient(92.71deg, #0499DD 0%, #17C1BC 100%);
   border-radius: 60px;
@@ -117,6 +126,17 @@ a {
     background: linear-gradient(92.71deg, rgba(4, 153, 221, 0.1) 0%, rgba(23, 193, 188, 0.1) 100%);
     border-radius: 30px;
     border: none;
+
+    .title {
+      span {
+        font-family: 'Montserrat-SemiBold';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 35px;
+        color: #170F49;
+      }
+    }
 
     .create-user-trip-btn {
       padding: 8px 25px;
@@ -1059,11 +1079,63 @@ a {
   }
 }
 
-.profile{
+.profile {
   margin-top: 30px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 4fr 8fr;
+  gap: 25px;
 
-  .user-photo{
+
+  input {
+    background: #FEFEFE;
+    border: 1px solid #D4D5DA;
+    box-sizing: border-box;
+    box-shadow: 0 2px 6px rgba(19, 18, 66, 0.07);
+    border-radius: 8px;
+    padding: 8px 5px;
+    width: 100%;
+    font-family: 'Montserrat-Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 140%;
+    color: #5B5B5B;
+  }
+
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    background: #FFFFFF;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    border-radius: 30px;
+    gap: 15px;
+    padding: 15px 30px;
+
+    > div {
+      //width: 300px;
+
+      h4 {
+        font-family: 'Montserrat-SemiBold';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 140%;
+        color: #170F49;
+      }
+
+      > div {
+        margin-top: 5px;
+        font-family: 'Montserrat-Regular';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 140%;
+        color: #5B5B5B;
+      }
+    }
+  }
+
+  .user-photo {
     display: block;
     height: 150px;
     width: 150px;
@@ -1072,4 +1144,16 @@ a {
     border-radius: 100%;
     border: none;
   }
+}
+
+.edit-btn {
+  display: flex;
+  gap: 10px;
+  padding: 8px 10px;
+  font-family: 'Montserrat-SemiBold';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  vertical-align: middle;
+  color: #FFFFFF;
 }

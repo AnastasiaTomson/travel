@@ -16,7 +16,8 @@ urlpatterns = [
     path('register/', register_user, name='register'),
     path('login_user/', login_user, name='login_user'),
     path('user_profile/', user_profile, name='user_profile'),
-    path('edit_profile/', edit_profile, name='edit_profile'),
+    path('edit_user_profile/', edit_user_profile, name='edit_user_profile'),
+    path('edit_password_user_profile/', edit_password_user_profile, name='edit_password_user_profile'),
     path('logout_user/', logout_user, name='logout_user'),
     path('set_cache/', set_cache, name='set_cache')
 ]

@@ -4,7 +4,7 @@ from .serializers import *
 from trip.form import *
 from place.models import *
 from trip.models import *
-from .admin import UserCreationForm
+from .admin import UserCreationForm, UserEditForm, UserEditPasswordForm
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
@@ -24,6 +24,7 @@ def login_user(request):
         user = authenticate(username=email, password=password)
         if user is not None:
             login(request, user)
+            return HttpResponseRedirect(reverse('user'))
         return HttpResponseRedirect(reverse('front'))
 
 
@@ -153,7 +154,7 @@ def add_my_trip_place(request, id):
                   context={'places': get_paginated_page(request, Place.objects.exclude(id__in=trip.place_in_trip()), 5),
                            'id': id, 'title': title})
 
-from django.forms.models import model_to_dict
+
 @login_required()
 def set_formset_user_trip(request):
     if request.method == 'POST':
@@ -223,21 +224,37 @@ def register_user(request):
 
 @login_required()
 def user_profile(request):
+    title = 'Мой профиль'
     user = MyUser.objects.get(id=request.user.id)
     return render(request, 'users/user_profile.html', locals())
 
 
 @login_required()
-def edit_profile(request):
+def edit_user_profile(request):
+    title = 'Мой профиль'
     user = MyUser.objects.get(id=request.user.id)
     if request.method == 'POST':
-        form = UserCreationForm(request.POST, request.FILES, instance=user)
+        form = UserEditForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('front'))
+            return HttpResponseRedirect(reverse('user_profile'))
     else:
-        form = UserCreationForm(instance=user)
-    return render(request, 'users/user_profile.html', locals())
+        form = UserEditForm(instance=user)
+    return render(request, 'users/edit_user_profile.html', locals())
+
+
+@login_required()
+def edit_password_user_profile(request):
+    title = 'Мой профиль'
+    user = MyUser.objects.get(id=request.user.id)
+    if request.method == 'POST':
+        form = UserEditPasswordForm(request.POST)
+        if form.is_valid() and form.clean_password2(user=user):
+            form.save(user=user)
+            return HttpResponseRedirect(reverse('user_profile'))
+    else:
+        form = UserEditPasswordForm()
+    return render(request, 'users/edit_password_user_profile.html', locals())
 
 
 def set_cache(request):

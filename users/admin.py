@@ -8,6 +8,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 from users.models import MyUser
+from django.contrib.auth import authenticate
 
 
 class UserCreationForm(forms.ModelForm):
@@ -42,6 +43,74 @@ class UserCreationForm(forms.ModelForm):
         user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
+        return user
+
+
+class UserEditForm(forms.ModelForm):
+    """A form for creating new users. Includes all the required
+    fields, plus a repeated password."""
+
+    # password_old = forms.CharField(label='Введите старый пароль',
+    #                                widget=forms.PasswordInput(attrs={'placeholder': ' Пароль'}))
+    # password1_new = forms.CharField(label='Введите новый пароль',
+    #                                 widget=forms.PasswordInput(attrs={'placeholder': ' Пароль'}))
+    # password2_new = forms.CharField(label='Повторите новый пароль',
+    #                                 widget=forms.PasswordInput(attrs={'placeholder': ' Повторите пароль'}))
+
+    class Meta:
+        model = MyUser
+        fields = ('email', 'name', 'last_name', 'fathername', 'image')
+
+        widgets = {'image': forms.FileInput(attrs={'onchange': 'ChangeImage(this)'}),
+                   'name': forms.TextInput(attrs={'placeholder': ' Имя'}),
+                   'last_name': forms.TextInput(attrs={'placeholder': ' Фамилия'}),
+                   'fathername': forms.TextInput(attrs={'placeholder': ' Отчество'}),
+                   'email': forms.EmailInput(attrs={'placeholder': ' Эл. почта (Логин)'}),
+                   }
+
+    def clean_password2(self, user):
+        # Check that the two password entries match
+        password_old_value = self.cleaned_data.get("password_old")
+        password1_new_value = self.cleaned_data.get("password1_new")
+        password2_new = self.cleaned_data.get("password2_new")
+        if not user.check_password(password_old_value):
+            self.add_error('password_old', "Старый пароль не совпадает")
+        elif password1_new_value and password2_new and password1_new_value != password2_new:
+            self.add_error('password1_new', "Новые пароли не совпадают")
+        else:
+            return password2_new
+
+    def save(self, commit=True):
+        # Save the provided password in hashed format
+        user = super(UserEditForm, self).save(commit=False)
+        # user.set_password(self.cleaned_data["password1_new"])
+        if commit:
+            user.save()
+        return user
+
+
+class UserEditPasswordForm(forms.Form):
+    password_old = forms.CharField(label='Введите старый пароль',
+                                   widget=forms.PasswordInput(attrs={'placeholder': ' Пароль'}))
+    password1_new = forms.CharField(label='Введите новый пароль',
+                                    widget=forms.PasswordInput(attrs={'placeholder': ' Пароль'}))
+    password2_new = forms.CharField(label='Повторите новый пароль',
+                                    widget=forms.PasswordInput(attrs={'placeholder': ' Повторите пароль'}))
+
+    def clean_password2(self, user):
+        password_old_value = self.cleaned_data.get("password_old")
+        password1_new_value = self.cleaned_data.get("password1_new")
+        password2_new = self.cleaned_data.get("password2_new")
+        if not user.check_password(password_old_value):
+            self.add_error('password_old', "Старый пароль не совпадает")
+        elif password1_new_value and password2_new and password1_new_value != password2_new:
+            self.add_error('password1_new', "Новые пароли не совпадают")
+        else:
+            return password2_new
+
+    def save(self, user):
+        user.set_password(self.cleaned_data["password1_new"])
+        user.save()
         return user
 
 
