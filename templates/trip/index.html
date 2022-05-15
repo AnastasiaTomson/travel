@@ -161,7 +161,7 @@
             <h3>Туры</h3>
             <div class="card-trip">
                 {% for trip in trips %}
-                    <div class="block-trip" style="background-image: url('{{ trip.one_image.img.url }}')">
+                    <div class="block-trip" style="background-image: url('{{ trip.image.img.url }}')">
                         <div class="image"></div>
 {#                        {% if user.is_authenticated %}#}
 {#                        <div class="like">#}
@@ -178,7 +178,7 @@
                         <div class="block-content-trip">
                             <h5>{{ trip.title }}</h5>
                             <div class="trip-action">
-                                <a href="">
+                                <a href="{% url 'page_of_trip' trip.id %}">
                                     <button>Подробнее</button>
                                 </a>
 {#                                {% if user.is_authenticated %}#}

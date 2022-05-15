@@ -208,7 +208,7 @@
                         <div class="block-content-place">
                             <h5>{{ place.title }}</h5>
                             <div class="place-action">
-                                <a href="">
+                                <a href="{% url 'page_of_place' place.id %}">
                                     <button>Подробнее</button>
                                 </a>
                                 {% if user.is_authenticated %}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet/less" type="text/css" href="/static/fonts/static/font.css">
+    <link rel="stylesheet/less" type="text/css" href="/static/css/place/style.less">
+    <script src="/static/js/less.js"></script>
+</head>
+<body>
+<section class="slider">
+    <section class="navbar">
+        <div class="max-content margin">
+            <a href="{% url 'front' %}"><img src="/static/img/front/logo.svg" alt="" height="40"></a>
+            <div class="menu">
+                <a href="{% url 'front' %}" class="active">Главная</a>
+                <a href="{% url 'trip' %}">Туры</a>
+                <a href="{% url 'place' %}">Места</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'user' %}" class="profile">
+                        <div style="display: inline-block; background-size: cover; background-position: center;width:35px; height: 35px; border: none; border-radius: 100%; background-image: url('{{ user.image.url }}')"></div>
+                        <span style="vertical-align: center">{{ user.name }}</span>
+                    </a>
+                    <a href="{% url 'logout_user' %}"><img src="/static/img/front/exit.png" alt=""></a>
+                {% else %}
+                    <p onclick="ShowAuthorization()">Личный кабинет</p>
+                {% endif %}
+            </div>
+        </div>
+
+    </section>
+
+    <div class="slide"></div>
+    <div class="max-content">
+        <div class="slide-title max-content">
+            <div class="slide-left-box">
+                <div class="slide-title-text">
+                    <h2>Временная страница места</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="block-place" style="background-image: url('{{ place.one_image.img.url }}')">
+    <div class="image"></div>
+    <div class="block-content-place">
+        <h5>{{ place.title }}</h5>
+    </div>
+</div>
+</body>
+</html>

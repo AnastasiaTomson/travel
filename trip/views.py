@@ -11,6 +11,13 @@ def index(request):
     return render(request, 'trip/index.html', locals())
 
 
+def page_of_trip(request, id):
+    # title = 'Страница тура'
+    trip = Trip.objects.get(id=id)
+    title = trip.title
+    return render(request, 'trip/page_of_trip.html', locals())
+
+
 class ChangeFavouriteTrip(View):
     def get(self, request, id):
         kwargs = {}
