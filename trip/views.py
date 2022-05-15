@@ -6,7 +6,9 @@ from django.http import JsonResponse
 
 
 def index(request):
-    return render(request, 'trip/index.html')
+    trips = Trip.objects.all().order_by("?")[:4]
+    # images = Image.objects.all().order_by("?")[:4]
+    return render(request, 'trip/index.html', locals())
 
 
 class ChangeFavouriteTrip(View):

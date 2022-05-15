@@ -15,7 +15,7 @@
             <a href="{% url 'front' %}"><img src="/static/img/front/logo.svg" alt="" height="40"></a>
             <div class="menu">
                 <a href="{% url 'front' %}" class="active">Главная</a>
-                <a href="">Туры</a>
+                <a href="{% url 'trip' %}">Туры</a>
                 {% if user.is_authenticated %}
                     <a href="{% url 'user' %}" class="profile">
                         <div style="display: inline-block; background-size: cover; background-position: center;width:35px; height: 35px; border: none; border-radius: 100%; background-image: url('{{ user.image.url }}')"></div>
@@ -61,7 +61,7 @@
                 <div class="season">
                     <div class="season-check">
                         <p>Сезон</p>
-                        <div class="line">___</div>
+{#                        <div class="line">___</div>#}
                     </div>
                     <div class="season-drop-block">
                         <div class="group-items">
@@ -94,7 +94,7 @@
                 <div class="city">
                     <div class="city-check">
                         <p>Город</p>
-                        <div class="line">___</div>
+{#                        <div class="line">___</div>#}
                     </div>
                     <div class="city-drop-block">
                         <div class="city-group-items">
@@ -117,7 +117,7 @@
                 <div class="type-place">
                     <div class="type-place-check">
                         <p>Тип места</p>
-                        <div class="line">___</div>
+{#                        <div class="line">___</div>#}
                     </div>
                     <div class="type-place-drop-block">
                         <div class="group-items">
@@ -150,7 +150,7 @@
                 <div class="tags">
                     <div class="tags-check">
                         <p>Тэги</p>
-                        <div class="line">___</div>
+{#                        <div class="line">___</div>#}
                     </div>
                     <div class="tags-drop-block">
                          <div class="group-items">
@@ -228,8 +228,9 @@
 <section class="footer">
     <div class="max-content footer-content">
         <div class="footer-block">
-            <a href="{% url 'index' %}">Главная</a>
-            <a href="">Туры</a>
+            <a href="{% url 'front' %}">Главная</a>
+            <a href="{% url 'trip' %}">Туры</a>
+            <a href="{% url 'place' %}">Места</a>
             {% if user.is_authenticated %}
                 <a href="{% url 'user' %}">Личный кабинет</a>
             {% else %}
@@ -264,6 +265,46 @@
             </form>
             <a href="{% url 'register' %}">Зарегистрироваться</a>
         </div>
+        <div class="modal-window add-to-trip">
+            {% csrf_token %}
+            <h4>Добавить место в тур</h4>
+            <div>
+                <span>Созданные туры</span>
+                <div class="trips">
+                    {% for trip in user_trips %}
+                        <div>
+                            <div class="image" style="background-image: url('{{ trip.image.img.url }}')"></div>
+                            <div>
+                                <p>{{ trip.title|truncatechars:15 }}</p>
+                                <button onclick="AddPlaceToTripModal(this, {{ trip.id }})">Добавить</button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="create-trip" onclick="CreateTripModal(this, $('.add-to-trip').attr('data-id_place'))">
+                        <img src="/static/img/front/create_add.svg" alt="">
+                        Создать тур
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-window create-trip">
+            <h4>Создать тур</h4>
+            <form id="trip-form" action="{% url 'create_trip_add_place' %}" method="post">
+                {% csrf_token %}
+                <div class="hidden">
+                    <input type="text" name="place_id">
+                </div>
+                <label for="{{ user_trip_form.title.id_for_label }}">
+                    <p>{{ user_trip_form.title.label }}</p>
+                    {{ user_trip_form.title }}
+                </label>
+                <label for="{{ user_trip_form.description.id_for_label }}">
+                    <p>{{ user_trip_form.description.label }}</p>
+                    {{ user_trip_form.description }}
+                </label>
+                <button class="save-btn">Сохранить</button>
+            </form>
+        </div>
     </section>
 {% endblock %}
 
@@ -271,6 +312,6 @@
 <script src="/static/js/front/authorization.js"></script>
 <script src="/static/js/front/favourite.js"></script>
 <script src="/static/js/user/pagination.js"></script>
-{#<script src="/static/js/front/add_to_tripe.js"></script>#}
+<script src="/static/js/front/add_to_tripe.js"></script>
 </body>
 </html>

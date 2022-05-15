@@ -14,8 +14,9 @@
         <div class="max-content margin">
             <a href=""><img src="/static/img/front/logo.svg" alt="" height="40"></a>
             <div class="menu">
-                <a href="" class="active">Главная</a>
-                <a href="">Туры</a>
+                <a href="{% url 'front' %}" class="active">Главная</a>
+                <a href="{% url 'trip' %}">Туры</a>
+                <a href="{% url 'place' %}">Места</a>
                 {% if user.is_authenticated %}
                     <a href="{% url 'user' %}" class="profile">
                         <div style="display: inline-block; background-size: cover; background-position: center;width:35px; height: 35px; border: none; border-radius: 100%; background-image: url('{{ user.image.url }}')"></div>
@@ -178,8 +179,9 @@
 <section class="footer">
     <div class="max-content footer-content">
         <div class="footer-block">
-            <a href="{% url 'index' %}">Главная</a>
-            <a href="">Туры</a>
+            <a href="{% url 'front' %}">Главная</a>
+            <a href="{% url 'trip' %}">Туры</a>
+            <a href="{% url 'place' %}">Места</a>
             {% if user.is_authenticated %}
                 <a href="{% url 'user' %}">Личный кабинет</a>
             {% else %}
