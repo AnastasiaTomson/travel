@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8"/>
+    <title>{{ places.0.trip.title }}</title>
+    <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
+    <style>
+        @font-face {
+            font-family: 'Montserrat-Bold';
+            src: url(/static/fonts/static/Montserrat-Bold.ttf) format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Montserrat-Regular';
+            src: url(/static/fonts/static/Montserrat-Regular.ttf) format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Montserrat-Light';
+            src: url(/static/fonts/static/Montserrat-Light.ttf) format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Montserrat-Medium';
+            src: url(/static/fonts/static/Montserrat-Medium.ttf) format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Montserrat-SemiBold';
+            src: url(/static/fonts/static/Montserrat-SemiBold.ttf) format('truetype');
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .content {
+            display: block;
+            margin: 35px auto;
+            padding: 10mm 10mm;
+        }
+
+        .content > img {
+            display: block;
+            margin: 0 auto;
+        }
+
+        .content .title {
+            margin-top: 35px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .content .title h3 {
+            font-family: 'Montserrat-SemiBold';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 30px;
+            line-height: 37px;
+            color: #170F49;
+        }
+
+        .content .title span {
+            display: block;
+            margin: 15px 0;
+            font-family: 'Montserrat-Medium';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 20px;
+            color: #170F49;
+        }
+
+        .content .places {
+            display: grid;
+            grid-gap: 25px;
+        }
+
+
+        .content .places .place {
+            display: flex;
+            gap: 25px;
+            border-bottom: 1px solid #B5B5B5;
+            justify-content: center;
+            padding: 10mm 5mm;
+        }
+
+        .content .places .place .image {
+            display: block;
+            align-self: center;
+            width: 100px;
+            height: 100px;
+            background-position: center;
+            background-size: cover;
+            border: none;
+            border-radius: 100%;
+        }
+
+        .content .places .place h4 {
+            font-family: 'Montserrat-SemiBold';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 22px;
+            color: #170F49;
+        }
+
+        .content .places .place .text {
+            margin-left: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            justify-content: space-between;
+            height: 100%;
+            width: 430px;
+        }
+
+        .content .places .place .text > div {
+            margin-top: 15px;
+        }
+
+        .content .places .place .text svg {
+            margin-right: 10px;
+        }
+
+        .content .places .place .text > span {
+            margin-top: 15px;
+        }
+
+        .content .places .place .text span {
+            font-family: 'Montserrat-Medium';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 20px;
+            color: #170F49;
+        }
+
+        .content .places .place .notes {
+            margin-left: 25px;
+            display: block;
+            width: 430px;
+        }
+
+        .content .places .place .notes > div {
+        }
+
+        .content .places .place .notes > div hr {
+            display: block;
+            margin-top: 20px;
+            height: 0;
+            color: #170F4966;
+        }
+
+        .max-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+    <img src="/static/img/user/logo.svg" alt="" height="60">
+    <div class="title">
+        <h3>{{ places.0.trip.title }}</h3>
+        <span>{{ places.0.trip.description }}</span>
+    </div>
+    <div class="places max-content">
+        {% for place in places %}
+            <div class="place">
+                <div class="image" style="background-image: url('{{ place.place.one_image.img.url }}')"></div>
+                <div class="text">
+                    <h4>{{ place.place.title }}</h4>
+                    <span>{{ place.place.description }}</span>
+                    <div style="display: flex; align-content: center; gap: 10px">
+                        {% if place.visit_time and not place.visit_date %}
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                 aria-hidden="true" role="img" class="iconify iconify--akar-icons" width="1em"
+                                 height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"
+                                 data-icon="akar-icons:clock" style="color: rgb(23, 15, 73); font-size: 20px;">
+                                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                   stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="m15 16l-2.414-2.414A2 2 0 0 1 12 12.172V6"></path>
+                                </g>
+                            </svg>
+                            <span> {{ place.visit_time|time:"H:i" }} </span>{% else %}
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                 aria-hidden="true" role="img" class="iconify iconify--akar-icons" width="1em"
+                                 height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"
+                                 data-icon="akar-icons:calendar" style="color: rgb(23, 15, 73); font-size: 20px;">
+                                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                   stroke-width="2">
+                                    <rect width="20" height="18" x="2" y="4" rx="4"></rect>
+                                    <path d="M8 2v4m8-4v4M2 10h20"></path>
+                                </g>
+                            </svg>
+                            <span>
+                                        {% if not place.visit_date %}
+                                            -
+                                        {% else %}
+                                            {{ place.visit_date|date:"d.m.Y" }} {{ place.visit_time|time:"H:i" }}
+                                        {% endif %}
+                                    </span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="notes">
+                    <h4>Заметки</h4>
+                    <div>
+                        <hr/>
+                        <hr/>
+                        <hr/>
+                        <hr/>
+                        <hr/>
+                        <hr/>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<script src="/static/js/jquery.min.js"></script>
+<script>
+    let sum_height = 0
+    $('.place').each(function (index, value) {
+        sum_height += parseInt($(value).height())
+        if (sum_height >= 1700 || sum_height >= 1680) {
+            if ($('.place').length-1 !== index) {
+                $(value).css({'page-break-after': 'always'})
+                sum_height = 0
+            }
+        }
+    })
+</script>
+</body>
+</html>

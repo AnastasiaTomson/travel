@@ -1,4 +1,3 @@
-{% load tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +9,6 @@
     <link rel="stylesheet/less" type="text/css" href="/static/css/datepicker.css">
     <script src="/static/js/less.js"></script>
     <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
-    <meta name="http-equiv" content="Content-type: text/html; charset=UTF-8">
 </head>
 <body>
 <div class="user-content max-content">
@@ -44,117 +42,19 @@
     </div>
 
     <div class="content">
-        <div style="display: flex; justify-content: space-between;">
-            <h2>Создать тур</h2>
-        </div>
-        <div class="create-user-trip">
-            <form action="{% url 'create_user_trip' %}" id="form" method="post">
-                {% csrf_token %}
-                {{ formset.management_form }}
-                {{ formset.non_form_errors }}
-                <div class="steps">
-                    <span class="active step-1">1</span>
-                    <div class="fist-first-line line active line-1"></div>
-                    <div class="fist-second-line line line-2"></div>
-                    <span class="step-2">2</span>
-                    <div class="second-first-line line line-2"></div>
-                    <div class="second-second-line line line-3"></div>
-                    <span class="step-3">3</span>
-                    <div class="third-first-line line line-3"></div>
-                    <div class="third-second-line line line-4"></div>
-                    <span class="step-4">4</span>
+        <form action="{% url 'add_my_trip_place' id %}" id="form" method="post">
+            {% csrf_token %}
+            <div style="display: flex; justify-content: space-between;">
+                <h2>Просмотр тура</h2>
+            </div>
+            <div class="my-trip-place white-block">
+                <h4>Добавить место</h4>
+                {% include 'place/place.html' %}
+                <div class="save-btn">
+                    <button>Сохранить</button>
                 </div>
-                <div class="first-step-block step-block step-block-1">
-                    <h4>Основная информация</h4>
-                    <span>Придумайте название для вашего тура</span>
-                    <div>
-                        <label for="{{ user_trip_form.title.id_for_label }}">
-                            <p>{{ user_trip_form.title.label }}</p>
-                            {{ user_trip_form.title }}
-                        </label>
-                        <label for="{{ user_trip_form.description.id_for_label }}">
-                            <p>{{ user_trip_form.description.label }}</p>
-                            {{ user_trip_form.description }}
-                        </label>
-                    </div>
-                </div>
-                <div class="second-step-block step-block step-block-2">
-                    <h4>Добавление мест</h4>
-                    <span>Добавьте места которые вы хотите посетить</span>
-                    {% for item in place_page_obj %}
-                        <div class="block-place">
-                            <div class="image"
-                                 style="background-image: url('{{ item.one_image.img.url }}')"></div>
-                            <div class="text">
-                                <h5>{{ item.title }}</h5>
-                                <p>Город: {{ item.city }}</p>
-                            </div>
-                            <div class="action-row-like">
-                                {% if item.id in request.session.id_places %}
-                                    <img onclick="CheckPlace(this, {{ item.id }}, true)"
-                                         src="/static/img/user/checked-place.svg" alt="">
-                                {% else %}
-                                    <img onclick="CheckPlace(this, {{ item.id }}, false)"
-                                         src="/static/img/user/check-place.svg" alt="">
-                                {% endif %}
-                            </div>
-                        </div>
-                    {% endfor %}
-                    {% if place_page_obj.paginator.num_pages != 1 %}
-                        <div class="pagination">
-                            {% if place_page_obj.has_previous %}
-                                <a href="?page_place={{ place_page_obj.previous_page_number }}"> < </a>
-                            {% endif %}
-
-                            {% if place_page_obj.number|add:'-2' > 1 %}
-                                <a href="?page_place={{ place_page_obj.number|add:'-3' }}">&hellip;</a>
-                            {% endif %}
-
-                            {% for i in place_page_obj.paginator.page_range %}
-                                {% if place_page_obj.number == i %}
-                                    <span class="active">{{ i }}</span>
-                                {% elif i > place_page_obj.number|add:'-3' and i < place_page_obj.number|add:'3' %}
-                                    <a href="?page_place={{ i }}">{{ i }}</a>
-                                {% endif %}
-                            {% endfor %}
-
-                            {% if place_page_obj.paginator.num_pages > place_page_obj.number|add:'2' %}
-                                <a href="?page_place={{ place_page_obj.number|add:'3' }}">&hellip;</a>
-                            {% endif %}
-
-                            {% if place_page_obj.has_next %}
-                                <a href="?page_place={{ place_page_obj.next_page_number }}"> ></a>
-                            {% endif %}
-                        </div>
-                    {% endif %}
-                </div>
-
-                <div class="third-step-block step-block step-block-3 my-trip">
-                    <h4>Планирование</h4>
-                    <span>Распланируйте по дням свое путешествие</span>
-                    {% include 'users/places_with_date.html' %}
-                </div>
-                <div class="fourth-step-block step-block step-block-4">
-                    <img src="/static/img/user/last_step.svg" alt="">
-                    <h4>Тур создан!</h4>
-                    <span>Ваш индивидуальный тур создан! Вы можете загрузить его себе на устройство или посмотреть на странице
-                    <a href="{% url 'user_trips' %}">Мои туры</a></span>
-                    <a href="">
-                        <span class="iconify" data-icon="charm:download" style="color: white; font-size: 20px;"></span>
-                        Загрузить
-                    </a>
-                </div>
-                <div class="fourth-step-block step-block error">
-                    <img src="/static/img/user/error.svg" alt="">
-                    <h4>Что-то пошло не так...</h4>
-                    <span>Ваш тур не удалось сохранить. <br> Проверьте введенные данные и попробуйте еще раз </span>
-                </div>
-            </form>
-        </div>
-        <div class="step-action">
-            <button class="last" onclick="LastStep(1)">Назад</button>
-            <button class="next" onclick="NextStep(2)">Далее</button>
-        </div>
+            </div>
+        </form>
     </div>
 
     <div class="right-sidebar">
@@ -194,16 +94,9 @@
 </div>
 
 <script src="/static/js/jquery.min.js"></script>
-<script src="/static/js/jquery-clock-timepicker.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js"
-        integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
-<script type="text/javascript" src="/static/js/user/datepicker/moment.js"></script>
-<script type="text/javascript" src="/static/js/user/datepicker/datepicker.ru-RU.js"></script>
-<script src="https://malsup.github.io/jquery.form.js"></script>
 <script src="/static/js/user/calendar.js"></script>
-<script src="/static/js/user/step.js"></script>
-<script src="/static/js/user/user-trip.js" charset="utf-8"></script>
-<script>
-</script>
+<script src="/static/js/user/add_place_to_trip.js"></script>
+<script src="/static/js/user/pagination.js"></script>
+
 </body>
 </html>

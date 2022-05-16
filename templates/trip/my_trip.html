@@ -41,19 +41,87 @@
     </div>
 
     <div class="content">
-        <form action="{% url 'add_my_trip_place' id %}" id="form" method="post">
-            {% csrf_token %}
-            <div style="display: flex; justify-content: space-between;">
-                <h2>Просмотр тура</h2>
+        <div style="display: flex; justify-content: space-between;">
+            <h2>Просмотр тура</h2>
+            <a href="{% url 'html_to_pdf' trip.id %}" target="_blank">
+                <img src="/static/img/user/exportTrip.svg" alt="">
+            </a>
+        </div>
+        <div class="my-trip white-block">
+            <div>
+                <h4>Основная информация </h4>
+                <a href="{% url 'edit_my_trip' trip.id %}"><span class="iconify" data-icon="eva:edit-2-fill"
+                                                                 style="color: #170f49; font-size: 20px;"></span></a>
             </div>
-            <div class="my-trip-place white-block">
-                <h4>Добавить место</h4>
-                {% include 'users/place.html' %}
-                <div class="save-btn">
-                    <button>Сохранить</button>
+            <div>
+                <div class="text">
+                    <div>
+                        <span>Название</span>
+                        <p>{{ trip.title }}</p>
+                    </div>
+                    <div>
+                        <span>Описание</span>
+                        <p>{% if trip.description == '' %}
+                            -
+                        {% else %}
+                            {{ trip.description }}
+                        {% endif %}
+                        </p>
+                    </div>
                 </div>
             </div>
-        </form>
+        </div>
+        <div class="my-trip-place white-block">
+            <div>
+                <h4>Места</h4>
+                <div>
+                    <a href="{% url 'add_my_trip_place' trip.id %}"><span class="iconify"
+                                                                          data-icon="fluent:add-12-filled"
+                                                                          style="color: #170f49; font-size: 20px;"></span></a>
+                    {% if trip.userplace_set.exists %}
+                        &nbsp;
+                        <a href="{% url 'edit_my_trip_places' trip.id %}"><span class="iconify"
+                                                                                data-icon="eva:edit-2-fill"
+                                                                                style="color: #170f49; font-size: 20px;"></span></a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="my-trip-place-show">
+                {% for item in places %}
+                    <div class="block-place">
+                        <div class="image"
+                             style="background-image: url('{{ item.place.one_image.img.url }}')"></div>
+                        <div class="text">
+                            <h5>{{ item.place.title }} ({{ item.place.city }})</h5>
+                            <div style="display: flex; align-content: center; gap: 10px">
+                                {% if item.visit_time and not item.visit_date %}
+                                    <span class="iconify" data-icon="akar-icons:clock"
+                                          style="color: #170f49; font-size: 20px;"></span>
+                                    <span>
+                                        {{ item.visit_time|time:"H:i" }}
+                                    </span>
+                                {% else %}
+                                    <span class="iconify" data-icon="akar-icons:calendar"
+                                          style="color: #170f49; font-size: 20px;"></span>
+                                    <span>
+                                        {% if not item.visit_date %}
+                                            -
+                                        {% else %}
+                                            {{ item.visit_date|date:"d.m.Y" }} {{ item.visit_time|time:"H:i" }}
+                                        {% endif %}
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="step-action" style="justify-content: end">
+            <a href="{% url 'delete_user_trip' trip.id %}">
+                <button class="last">Удалить тур</button>
+            </a>
+        </div>
     </div>
 
     <div class="right-sidebar">
@@ -94,8 +162,22 @@
 
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/user/calendar.js"></script>
-<script src="/static/js/user/add_place_to_trip.js"></script>
-<script src="/static/js/user/pagination.js"></script>
-
+<script>
+    function CheckFavouritePlace(obj, id) {
+        $.ajax({
+            url: '/place/favourite_place/' + id,
+            type: 'GET',
+            success: function (response) {
+                if (response.status) {
+                    if (response.type === 'active') {
+                        $(obj).attr('src', '/static/img/user/like-active.svg')
+                    } else {
+                        $(obj).attr('src', '/static/img/user/like.svg')
+                    }
+                }
+            }
+        })
+    }
+</script>
 </body>
 </html>

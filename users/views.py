@@ -57,7 +57,7 @@ def favourite(request):
                 "result": True,
                 "articles": render_to_string(
                     request=request,
-                    template_name='users/place_list_like.html',
+                    template_name='place/place_list_like.html',
                     context={
                         'places': get_paginated_page(request, FavouritePlace.objects.all(), 5)}
                 )
@@ -75,7 +75,7 @@ def user_trips(request):
     trips_page_number = request.GET.get('page_trip', 1)
     trips_page_obj = trips_paginator.get_page(trips_page_number)
     if trips.exists():
-        return render(request, 'users/my_trips.html', locals())
+        return render(request, 'trip/my_trips.html', locals())
     else:
         return HttpResponseRedirect(reverse('create_user_trip'))
 
@@ -85,7 +85,7 @@ def my_trip(request, id):
     trip = UserTrip.objects.get(id=id)
     title = trip.title
     places = UserPlace.objects.filter(trip=trip).order_by('visit_date', 'visit_time')
-    return render(request, 'users/my_trip.html', locals())
+    return render(request, 'trip/my_trip.html', locals())
 
 
 @login_required()
@@ -97,7 +97,7 @@ def edit_my_trip(request, id):
         if user_trip_form.is_valid():
             user_trip_form.save()
             return HttpResponseRedirect(reverse('my_trip', args={id: id}))
-    return render(request, 'users/edit_my_trip.html', locals())
+    return render(request, 'trip/edit_my_trip.html', locals())
 
 
 @login_required()
@@ -116,7 +116,7 @@ def edit_my_trip_places(request, id):
         if formset.is_valid():
             formset.save()
             return HttpResponseRedirect(reverse('my_trip', args={id: id}))
-    return render(request, 'users/edit_my_trip_places.html', locals())
+    return render(request, 'place/edit_my_trip_places.html', locals())
 
 
 def get_paginated_page(request, objects, number=10):
@@ -140,7 +140,7 @@ def add_my_trip_place(request, id):
                 "result": True,
                 "articles": render_to_string(
                     request=request,
-                    template_name='users/place.html',
+                    template_name='place/place.html',
                     context={
                         'places': get_paginated_page(request, Place.objects.exclude(id__in=trip.place_in_trip()), 5)}
                 )
@@ -150,7 +150,7 @@ def add_my_trip_place(request, id):
                 place = Place.objects.get(id=int(i))
                 UserPlace.objects.create(place=place, trip=trip)
             return HttpResponseRedirect(reverse('my_trip', args={id: id}))
-    return render(request=request, template_name='users/add_my_trip_places.html',
+    return render(request=request, template_name='place/add_my_trip_places.html',
                   context={'places': get_paginated_page(request, Place.objects.exclude(id__in=trip.place_in_trip()), 5),
                            'id': id, 'title': title})
 
@@ -177,7 +177,7 @@ def set_formset_user_trip(request):
                 "result": True,
                 "articles": render_to_string(
                     request=request,
-                    template_name='users/places_with_date.html',
+                    template_name='place/places_with_date.html',
                     context={'formset': formset}
                 )
             })
@@ -195,7 +195,7 @@ def create_user_trip(request):
                 formset.save()
                 del request.session['id_places']
                 return HttpResponse(
-                    json.dumps({'status': True}),
+                    json.dumps({'status': True, 'url': f'http://127.0.0.1:8000/trip/pdf/{user_trip_object.id}'}),
                     content_type="application/json"
                 )
         return HttpResponse(
@@ -207,7 +207,7 @@ def create_user_trip(request):
         place_paginator = Paginator(places, 5)
         place_page_number = request.GET.get('page_place', 1)
         place_page_obj = place_paginator.get_page(place_page_number)
-        return render(request=request, template_name='users/create_user_trip.html',
+        return render(request=request, template_name='trip/create_user_trip.html',
                       context={'user_trip_form': user_trip_form, 'place_page_obj': place_page_obj,
                                'title': title})
 
@@ -303,3 +303,5 @@ def create_trip_add_place(request):
             if not UserPlace.objects.filter(trip=user_trip, place=place).exists():
                 UserPlace.objects.create(trip=user_trip, place=place)
                 return HttpResponseRedirect(reverse('front'))
+
+

@@ -3,6 +3,10 @@ from .models import *
 from django.views import View
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
+from django.http import HttpResponseRedirect, HttpResponse
+from django.urls import reverse
+from travel import settings
+from slugify import slugify
 
 
 def index(request):
@@ -35,3 +39,19 @@ class ChangeFavouriteTrip(View):
         except Exception:
             kwargs['status'] = 0
         return JsonResponse({**kwargs})
+
+
+def pdf_trip(request, id):
+    places = UserPlace.objects.filter(trip_id=id).order_by('visit_date', 'visit_time')
+    return render(request, 'trip/pdf.html', locals())
+
+
+def html_to_pdf(request, id):
+    import pdfkit
+    pdfkit.from_url(f'http://127.0.0.1:8000/trip/pdf/{id}', settings.MEDIA_ROOT + '/trip.pdf')
+    trip = UserTrip.objects.get(id=id)
+    test_file = open(settings.MEDIA_ROOT + '/trip.pdf', 'rb')
+    response = HttpResponse(content=test_file)
+    response['Content-Type'] = 'application/pdf'
+    response['Content-Disposition'] = f'attachment; filename="{slugify(trip.title)}.pdf"'
+    return response

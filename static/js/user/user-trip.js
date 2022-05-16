@@ -106,6 +106,7 @@ $('#form').ajaxForm(function (request) {
         $('.error').show()
         $('.step-block-4').hide()
     } else {
+        $('.download').attr('href', request['url'])
         $('.error').hide()
         $('.step-block-4').show()
     }
