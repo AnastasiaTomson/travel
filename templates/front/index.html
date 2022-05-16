@@ -53,7 +53,7 @@
 
 <section class="content">
     <div class="popular-place max-content">
-        <div class="title-block"><h4>Интересные места</h4><a href=""><small>Смотреть все</small></a></div>
+        <div class="title-block"><h4>Интересные места</h4><a href="{% url 'place' %}"><small>Смотреть все</small></a></div>
         <div class="popular-places">
             {% for place in places %}
                 <div class="block-place" style="background-image: url('{{ place.one_image.img.url }}')">
@@ -100,8 +100,8 @@
     </div>
     <div class="popular-trip max-content">
         <div class="title-block"><h4>Популярные туры</h4>
-            {% if trips.count > 3 %}
-                <a href=""><small>Смотреть все</small></a>
+            {% if trips.count > 2 %}
+                <a href="{% url 'trip' %}"><small>Смотреть все</small></a>
             {% endif %}
         </div>
         <div class="popular-trips">

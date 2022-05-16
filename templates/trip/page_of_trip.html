@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{{ trip.title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet/less" type="text/css" href="/static/fonts/static/font.css">
     <link rel="stylesheet/less" type="text/css" href="/static/css/trip/style.less">
     <script src="/static/js/less.js"></script>
 </head>
 <body>
-<section class="slider">
+<section class="slider-page">
     <section class="navbar">
         <div class="max-content margin">
             <a href="{% url 'front' %}"><img src="/static/img/front/logo.svg" alt="" height="40"></a>
@@ -30,23 +30,176 @@
         </div>
 
     </section>
-
-    <div class="slide"></div>
+    <div class="slide-page"></div>
     <div class="max-content">
         <div class="slide-title max-content">
             <div class="slide-left-box">
                 <div class="slide-title-text">
-                    <h2>Временная страница тура</h2>
+{#                    <h3>{{ trip.district }}</h3>#}
+                    <div>   <h2>{{ trip.title }}</h2></div>
+                </div>
+                <div class="action-bar">
+                    <a href="{% url 'place' %}" class="button">К другим турам &nbsp;<img src="/static/img/front/arrow.svg" alt=""></a>
+                    <div class="act-action">
+                        <div class="like">
+                            {% if place.favouriteplace_set.count != 0 %}
+                                <img onclick="CheckFavouritePlace(this, {{ place.id }})"
+                                     src="/static/img/front/like-active.svg" alt=""
+                                     height="40px">
+                            {% else %}
+                                <img onclick="CheckFavouritePlace(this, {{ place.id }})"
+                                     src="/static/img/front/like.svg" alt="">
+                            {% endif %}
+                        </div>
+                    {% if user.is_authenticated %}
+                            <div onclick="AddPlaceToTrip({{ place.id }})">
+                                <img src="/static/img/front/add.png" alt="">
+                            </div>
+                    {% endif %}
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 </section>
-<div class="block-trip" style="background-image: url('{{ trip.image.img.url }}')">
-    <div class="image"></div>
-    <div class="block-content-trip">
-        <h5>{{ trip.title }}</h5>
+
+<section class="content">
+    <section class="place-description max-content">
+        <h4>Описание места</h4>
+        {% if trip.description %}
+            <h5>{{ trip.description}}</h5>
+            {% else %}
+            <h5>Описание тура отсутствует</h5>
+        {% endif %}
+
+    </section>
+
+    <section class="gallery-section max-content">
+    <div class="title-block"><h4>Галерея</h4>
+{#        <a href=""><small>Смотреть все</small></a>#}
     </div>
-</div>
+    <div class="gallery-block">
+        {% for place in trip.place.all %}
+            {% for image in place.image.all %}
+            <div style="background:
+                    linear-gradient(0deg, rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('{{ image.img.url }}') no-repeat center/cover"
+                 title="{{ image.title|default_if_none:'' }}">
+            </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+</section>
+</section>
+
+<section class="feedback">
+    <div class="max-content">
+        <form action="{% url 'feedback' %}" method="post">
+            {% csrf_token %}
+            <div>
+                <h4>Остались вопросы?</h4>
+                <small>Оставь заявку и мы ответим</small>
+                <p>
+                    <input type="text" name="name" placeholder="Имя" required="required">
+                </p>
+                <p>
+                    <input type="text" name="phone" placeholder="Телефон" required="required">
+                </p>
+                <p>
+                    <input type="email" name="email" placeholder="Почта" required="required">
+                </p>
+                <button class="button">Оставить заявку</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<section class="footer" style="margin-top: 10vh">
+    <div class="max-content footer-content">
+        <div class="footer-block">
+            <a href="{% url 'front' %}">Главная</a>
+            <a href="{% url 'trip' %}">Туры</a>
+            <a href="{% url 'place' %}">Места</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'user' %}">Личный кабинет</a>
+            {% else %}
+                <p onclick="ShowAuthorization()">Личный кабинет</p>
+            {% endif %}
+        </div>
+        <div class="footer-block">
+            <a href="" class="icon tg">+7 978 701 31 02</a>
+            <a href="" class="icon tg">+7 978 701 31 02</a>
+        </div>
+        <div class="footer-block">
+            <a href="" class="icon mail">office_windtravel@mail.ru</a>
+            <a href=""><img src="/static/img/front/vkF.svg" alt=""></a>
+        </div>
+    </div>
+</section>
+
+{% block modalwindow %}
+    <section class="modal-block">
+        <div class="modal-window login-form">
+            <h4>Авторизация</h4>
+            <form action="{% url 'login_user' %}" method="post">
+                {% csrf_token %}
+                <label for="">
+                    <input type="text" name="email" placeholder="Логин">
+                </label>
+                <label for="" class="password">
+                    <input type="password" name="password1" placeholder="Пароль">
+                    <img src="/static/img/front/eye.png" alt="">
+                </label>
+                <button>Войти</button>
+            </form>
+            <a href="{% url 'register' %}">Зарегистрироваться</a>
+        </div>
+        <div class="modal-window add-to-trip">
+            {% csrf_token %}
+            <h4>Добавить место в тур</h4>
+            <div>
+                <span>Созданные туры</span>
+                <div class="trips">
+                    {% for trip in user_trips %}
+                        <div>
+                            <div class="image" style="background-image: url('{{ trip.image.img.url }}')"></div>
+                            <div>
+                                <p>{{ trip.title|truncatechars:15 }}</p>
+                                <button onclick="AddPlaceToTripModal(this, {{ trip.id }})">Добавить</button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="create-trip" onclick="CreateTripModal(this, $('.add-to-trip').attr('data-id_place'))">
+                        <img src="/static/img/front/create_add.svg" alt="">
+                        Создать тур
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-window create-trip">
+            <h4>Создать тур</h4>
+            <form id="trip-form" action="{% url 'create_trip_add_place' %}" method="post">
+                {% csrf_token %}
+                <div class="hidden">
+                    <input type="text" name="place_id">
+                </div>
+                <label for="{{ user_trip_form.title.id_for_label }}">
+                    <p>{{ user_trip_form.title.label }}</p>
+                    {{ user_trip_form.title }}
+                </label>
+                <label for="{{ user_trip_form.description.id_for_label }}">
+                    <p>{{ user_trip_form.description.label }}</p>
+                    {{ user_trip_form.description }}
+                </label>
+                <button class="save-btn">Сохранить</button>
+            </form>
+        </div>
+    </section>
+{% endblock %}
+
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/front/authorization.js"></script>
+<script src="/static/js/front/favourite.js"></script>
+<script src="/static/js/front/add_to_tripe.js"></script>
 </body>
 </html>

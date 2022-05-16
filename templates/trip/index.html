@@ -148,7 +148,7 @@
                 <button class="button">Показать</button>
                 <div class="reset-filters">
                     <p>х</p>
-                    <h4>Сбросить фильтры</h4>
+                    <h5>Сбросить фильтры</h5>
                 </div>
             </form>
         </div>
@@ -161,7 +161,19 @@
                         <div class="block-content-trip">
                             <div class="text-trip">
                                 <h5>{{ trip.title }}</h5>
-                                <h6>{{ trip.description|truncatewords:50 }}</h6>
+                                <div class="vertical-line"></div>
+                                <div class="description">
+                                    {% if trip.price %}
+                                    <small><img src="/static/img/trip/blue_money.png" alt=""> &nbsp;{{ trip.price }} ₽</small>
+                                    {% else %}
+                                        <small><img src="/static/img/trip/blue_money.png" alt=""> 0 ₽</small>
+                                    {% endif %}
+                                    {% if trip.description %}
+                                    <h6>{{ trip.description|truncatewords:45 }}</h6>
+                                    {% else %}
+                                        <h6>Описание тура отсутствует</h6>
+                                    {% endif %}
+                                </div>
                             </div>
                             <div class="trip-action">
                                 <a href="{% url 'page_of_trip' trip.id %}">

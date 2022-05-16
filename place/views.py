@@ -13,20 +13,8 @@ from django.http import JsonResponse
 def index(request):
     title = 'Каталог мест'
     places = Place.objects.all().order_by("?")[:12]
-    # if request.method == 'POST':
-    #     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-    #         return JsonResponse({
-    #             "result": True,
-    #             "articles": render_to_string(
-    #                 request=request,
-    #                 template_name='place/index.html',
-    #                 context={
-    #                     'places': get_paginated_page(request, Place.objects.all(), 12)}
-    #             )
-    #         })
-    # return render(request=request, template_name='place/index.html',
-    #               context={'places': get_paginated_page(request, Place.objects.all(), 12),
-    #                         'title': title})
+    user_trips = UserTrip.objects.all()
+    user_trip_form = UserTripForm(request_user=request.user)
     return render(request, 'place/index.html', locals())
 
 
@@ -34,6 +22,8 @@ def page_of_place(request, id):
     # title = 'Страница места'
     place = Place.objects.get(id=id)
     title = place.title
+    user_trips = UserTrip.objects.all()
+    user_trip_form = UserTripForm(request_user=request.user)
     return render(request, 'place/page_of_place.html', locals())
 
 
