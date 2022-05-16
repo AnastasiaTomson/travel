@@ -47,13 +47,8 @@
     <div class="personal-trip-form max-content">
         <h3>Создай свой идеальный тур</h3>
         <form action="">
-{#            <h4></h4>#}
             <input type="text" value="Не нашли подходящего? Составьте свой!" disabled>
-{#            <input type="text" value="Описание">#}
-{#            <div class="custom-input">#}
-{#                <input type="text" value="Описание">#}
-{#            </div>#}
-            <button class="button" onclick="CreateTripModal(this, $('.add-to-trip').attr('data-id_place'))">Создать</button>
+            <a href="{% url 'create_user_trip' %}" class="button">Создать</a>
         </form>
     </div>
     {% endif %}
@@ -161,26 +156,29 @@
             <h3>Туры</h3>
             <div class="card-trip">
                 {% for trip in trips %}
-                    <div class="block-trip" style="background-image: url('{{ trip.image.img.url }}')">
-                        <div class="image"></div>
-{#                        {% if user.is_authenticated %}#}
-{#                        <div class="like">#}
-{#                            {% if place.favouriteplace_set.count != 0 %}#}
-{#                                <img onclick="CheckFavouritePlace(this, {{ place.id }})"#}
-{#                                     src="/static/img/front/like-active.svg" alt=""#}
-{#                                     height="40px">#}
-{#                            {% else %}#}
-{#                                <img onclick="CheckFavouritePlace(this, {{ place.id }})"#}
-{#                                     src="/static/img/front/like.svg" alt="">#}
-{#                            {% endif %}#}
-{#                        </div>#}
-{#                    {% endif %}#}
+                    <div class="block-trip" >
+                        <div class="image" style="background-image: url('{{ trip.image.img.url }}')"></div>
                         <div class="block-content-trip">
-                            <h5>{{ trip.title }}</h5>
+                            <div class="text-trip">
+                                <h5>{{ trip.title }}</h5>
+                                <h6>{{ trip.description|truncatewords:50 }}</h6>
+                            </div>
                             <div class="trip-action">
                                 <a href="{% url 'page_of_trip' trip.id %}">
                                     <button>Подробнее</button>
                                 </a>
+                                {% if user.is_authenticated %}
+                                <div class="like">
+                                    {% if place.favouriteplace_set.count != 0 %}
+                                        <img onclick="CheckFavouriteTrip(this, {{ trip.id }})"
+                                             src="/static/img/front/like-active.svg" alt=""
+                                             height="40px">
+                                    {% else %}
+                                        <img onclick="CheckFavouriteTrip(this, {{ trip.id }})"
+                                             src="/static/img/front/like.svg" alt="">
+                                    {% endif %}
+                                </div>
+                                {% endif %}
 {#                                {% if user.is_authenticated %}#}
 {#                                    <div onclick="AddPlaceToTrip({{ place.id }})">#}
 {#                                        <img src="/static/img/front/add.png" alt="">#}
@@ -220,38 +218,20 @@
 
 {% block modalwindow %}
     <section class="modal-block">
-{#    <div class="modal-window login-form">#}
-{#            <h4>Авторизация</h4>#}
-{#            <form action="{% url 'login_user' %}" method="post">#}
-{#                {% csrf_token %}#}
-{#                <label for="">#}
-{#                    <input type="text" name="email" placeholder="Логин">#}
-{#                </label>#}
-{#                <label for="" class="password">#}
-{#                    <input type="password" name="password1" placeholder="Пароль">#}
-{#                    <img src="/static/img/front/eye.png" alt="">#}
-{#                </label>#}
-{#                <button>Войти</button>#}
-{#            </form>#}
-{#            <a href="{% url 'register' %}">Зарегистрироваться</a>#}
-{#        </div>#}
-    <div class="modal-window create-trip">
-            <h4>Создать тур</h4>
-            <form id="trip-form" action="{% url 'create_trip_add_place' %}" method="post">
+    <div class="modal-window login-form">
+            <h4>Авторизация</h4>
+            <form action="{% url 'login_user' %}" method="post">
                 {% csrf_token %}
-                <div class="hidden">
-                    <input type="text" name="place_id">
-                </div>
-                <label for="{{ user_trip_form.title.id_for_label }}">
-                    <p>{{ user_trip_form.title.label }}</p>
-                    {{ user_trip_form.title }}
+                <label for="">
+                    <input type="text" name="email" placeholder="Логин">
                 </label>
-                <label for="{{ user_trip_form.description.id_for_label }}">
-                    <p>{{ user_trip_form.description.label }}</p>
-                    {{ user_trip_form.description }}
+                <label for="" class="password">
+                    <input type="password" name="password1" placeholder="Пароль">
+                    <img src="/static/img/front/eye.png" alt="">
                 </label>
-                <button class="save-btn">Сохранить</button>
+                <button>Войти</button>
             </form>
+            <a href="{% url 'register' %}">Зарегистрироваться</a>
         </div>
     </section>
 {% endblock %}
@@ -260,7 +240,7 @@
 <script src="/static/js/front/authorization.js"></script>
 <script src="/static/js/front/favourite.js"></script>
 <script src="/static/js/user/pagination.js"></script>
-<script src="/static/js/front/add_to_tripe.js"></script>
+
 
 </body>
 </html>

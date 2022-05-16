@@ -164,23 +164,6 @@ a {
         border-bottom: 2px solid #5E4234;
         height: 18px;
       }
-      .custom-input {
-        position: relative;
-        width: calc(400px - 50px);
-
-        &:before {
-          content: '';
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          right: 16px;
-          margin: auto 0;
-          width: 14px;
-          height: 18px;
-          //background: url('/static/img/front/map.png') no-repeat;
-          //background-size: contain;
-        }
-      }
 
       input {
         border: none;
@@ -196,18 +179,25 @@ a {
         color: #000000;
         text-align: center;
       }
-
-
-
-
-      button {
+      a{
         background: linear-gradient(92.71deg, #0499DD 0%, #17C1BC 100%);
         width: 235px;
         border: none;
         border-radius: 10px;
         color: #FFFFFF;
         cursor: pointer;
+        font-family: 'Montserrat-Bold';
+        text-align: center;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 50px;
+
+        &:hover {
+          box-shadow: inset 5px 5px 5px #4CC9F9, inset -5px -5px 5px rgba(40, 40, 40, 0.42);
+        }
       }
+
     }
   }
   .content-trip{
@@ -575,9 +565,12 @@ a {
     }
   }
     .like {
-    position: absolute;
-    top: 10px;
-    left: 10px;
+      position: sticky;
+      top: 10px;
+      left: 10px;
+      background-color: #EDEDED;
+      border-radius: 40px;
+      height: 40px;
 
     img {
       height: 40px;
@@ -606,42 +599,67 @@ a {
       .block-trip {
         display: flex;
         align-items: end;
-        width: 256px;
+        width: 1013px;
         height: 328px;
         position: relative;
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
         border-radius: 10px;
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+        justify-content: space-between;
 
         .image {
           position: absolute;
           height: 100%;
-          width: 100%;
+          width: 30%;
           background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #0A0505 100%);
+          background:  no-repeat center center;
+          background-size: cover;
           border-radius: 10px;
         }
 
         .block-content-trip {
+          //display: flex;
+          margin-left: 30%;
+          align-items: end;
           z-index: 5;
-          width: 100%;
+          width: 60%;
+          height: 80%;
           display: block;
           color: #FFFFFF;
-          padding: 16px;
+          /* сверху | справа | снизу | слева */
+          padding: 16px 5% 30px 5%;
+          justify-content: space-between;
 
-          .trip-action {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-          }
-
-          h5 {
+          .text-trip{
+            height: 220px;
+            h5 {
             font-family: 'Montserrat-Bold';
             font-style: normal;
             font-weight: 700;
             font-size: 18px;
             margin-bottom: 15px;
             line-height: 22px;
+            color: #000000;
+          }
+            h6{
+              color: #000000;
+              font-family: 'Montserrat-Regular';
+              font-style: normal;
+              font-weight: 700;
+              font-size: 14px;
+              margin-bottom: 15px;
+              line-height: 22px;
+            }
+          }
+
+          .trip-action {
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            vertical-align: bottom;
+            grid-gap: 2%;
           }
 
           small {
