@@ -44,7 +44,8 @@
                     </div>
                     <h3>вместе с</h3>
                 </div>
-                <a href="{% url 'trip' %}" class="button">К турам &nbsp;&nbsp;<img src="/static/img/front/arrow.svg" alt=""></a>
+                <a href="{% url 'trip' %}" class="button">К турам &nbsp;&nbsp;<img src="/static/img/front/arrow.svg"
+                                                                                   alt=""></a>
             </div>
             <a href=""><img src="/static/img/front/vk.png" alt=""></a>
         </div>
@@ -53,7 +54,8 @@
 
 <section class="content">
     <div class="popular-place max-content">
-        <div class="title-block"><h4>Интересные места</h4><a href="{% url 'place' %}"><small>Смотреть все</small></a></div>
+        <div class="title-block"><h4>Интересные места</h4><a href="{% url 'place' %}"><small>Смотреть все</small></a>
+        </div>
         <div class="popular-places">
             {% for place in places %}
                 <div class="block-place" style="background-image: url('{{ place.one_image.img.url }}')">

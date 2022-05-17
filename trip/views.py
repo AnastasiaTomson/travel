@@ -55,7 +55,7 @@ def html_to_pdf(request, id):
     except:
         pdfkit.from_url(f'http://127.0.0.1:8000/trip/pdf/{id}', os.path.abspath('trip.pdf'))
     trip = UserTrip.objects.get(id=id)
-    test_file = open(settings.MEDIA_ROOT + '/trip.pdf', 'rb')
+    test_file = open(os.path.abspath('trip.pdf'), 'rb')
     response = HttpResponse(content=test_file)
     response['Content-Type'] = 'application/pdf'
     response['Content-Disposition'] = f'attachment; filename="{slugify(trip.title)}.pdf"'

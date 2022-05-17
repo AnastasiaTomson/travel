@@ -228,7 +228,7 @@
     let sum_height = 0
     $('.place').each(function (index, value) {
         sum_height += parseInt($(value).height())
-        if (sum_height >= 1700 || sum_height >= 1680) {
+        if (sum_height >= 1000) {
             if ($('.place').length-1 !== index) {
                 $(value).css({'page-break-after': 'always'})
                 sum_height = 0
