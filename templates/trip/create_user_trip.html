@@ -156,40 +156,7 @@
         </div>
     </div>
 
-    <div class="right-sidebar">
-        <div class="user-icon-profile">
-            <a href="{% url 'user_profile' %}">
-                <div class="icon" style="background-image: url('{{ user.image.url }}')"></div>
-                <div class="name-logo">
-                    <p class="name">{{ user.last_name }} {{ user.name }}</p>
-                    <p class="login">{{ user.email }}</p>
-                </div>
-            </a>
-            <a href="{% url 'logout_user' %}"><img src="/static/img/user/exit.png" alt=""></a>
-        </div>
-        <div class="calendar">
-            <table id="calendar2">
-                <thead>
-                <tr>
-                    <td style="font-size: 20px">‹</td>
-                    <td colspan="5"></td>
-                    <td style="font-size: 20px">›</td>
-                </tr>
-                <tr>
-                    <td>Пн</td>
-                    <td>Вт</td>
-                    <td>Ср</td>
-                    <td>Чт</td>
-                    <td>Пт</td>
-                    <td>Сб</td>
-                    <td>Вс</td>
-                </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
-    </div>
+    {% include 'users/right-sidebar.html' %}
 </div>
 
 <script src="/static/js/jquery.min.js"></script>

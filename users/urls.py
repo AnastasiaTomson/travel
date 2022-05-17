@@ -14,6 +14,7 @@ urlpatterns = [
     path('create_trip_add_place/', create_trip_add_place, name='create_trip_add_place'),
     path('set_formset_user_trip/', set_formset_user_trip, name='set_formset_user_trip'),
     path('place_get/', PlaceGet.as_view(), name="place_get"),
+    path('place_date/', PlaceDateGet.as_view(), name="place_date"),
     path('register/', register_user, name='register'),
     path('login_user/', login_user, name='login_user'),
     path('user_profile/', user_profile, name='user_profile'),

@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from place.models import *
+from trip.models import UserPlace, UserTrip
 
 
 class ImageSerializer(serializers.ModelSerializer):
@@ -15,6 +16,12 @@ class CitySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class TripSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserTrip
+        fields = '__all__'
+
+
 class PlaceSerializer(serializers.ModelSerializer):
     image = ImageSerializer(many=True)
     city = CitySerializer()
@@ -22,3 +29,11 @@ class PlaceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Place
         fields = ['id', 'title', 'city', 'image']
+
+
+class PlaceDateSerializer(serializers.ModelSerializer):
+    trip = TripSerializer()
+
+    class Meta:
+        model = UserPlace
+        fields = '__all__'

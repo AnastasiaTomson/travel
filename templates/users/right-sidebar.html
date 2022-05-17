@@ -1,0 +1,36 @@
+<div class="right-sidebar">
+    <div class="user-icon-profile">
+        <a href="{% url 'user_profile' %}">
+            <div class="icon" style="background-image: url('{{ user.image.url }}')"></div>
+            <div class="name-logo">
+                <p class="name">{{ user.last_name }} {{ user.name }}</p>
+                <p class="login">{{ user.email }}</p>
+            </div>
+        </a>
+        <a href="{% url 'logout_user' %}"><img src="/static/img/user/exit.png" alt=""></a>
+    </div>
+    <div class="calendar">
+        <table id="calendar2">
+            <thead>
+            <tr>
+                <td style="font-size: 20px">‹</td>
+                <td colspan="5"></td>
+                <td style="font-size: 20px">›</td>
+            </tr>
+            <tr>
+                <td style="padding: 15px 0">Пн</td>
+                <td style="padding: 15px 0">Вт</td>
+                <td style="padding: 15px 0">Ср</td>
+                <td style="padding: 15px 0">Чт</td>
+                <td style="padding: 15px 0">Пт</td>
+                <td style="padding: 15px 0">Сб</td>
+                <td style="padding: 15px 0">Вс</td>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="/static/js/user/calendar.js"></script>

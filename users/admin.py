@@ -50,13 +50,6 @@ class UserEditForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
 
-    # password_old = forms.CharField(label='Введите старый пароль',
-    #                                widget=forms.PasswordInput(attrs={'placeholder': ' Пароль'}))
-    # password1_new = forms.CharField(label='Введите новый пароль',
-    #                                 widget=forms.PasswordInput(attrs={'placeholder': ' Пароль'}))
-    # password2_new = forms.CharField(label='Повторите новый пароль',
-    #                                 widget=forms.PasswordInput(attrs={'placeholder': ' Повторите пароль'}))
-
     class Meta:
         model = MyUser
         fields = ('email', 'name', 'last_name', 'fathername', 'image')

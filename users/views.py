@@ -282,6 +282,16 @@ class PlaceGet(generics.ListAPIView):
         return places
 
 
+class PlaceDateGet(generics.ListAPIView):
+    serializer_class = PlaceDateSerializer
+
+    def get_queryset(self):
+        places = UserPlace.objects.filter(trip__user_id=self.request.user.id,
+                                          visit_date__year=self.request.GET.get('year'),
+                                          visit_date__month=self.request.GET.get('month'))
+        return places
+
+
 def add_place_to_trip(request):
     if request.method == 'POST':
         trip_id = request.POST.get('trip_id')
@@ -303,5 +313,3 @@ def create_trip_add_place(request):
             if not UserPlace.objects.filter(trip=user_trip, place=place).exists():
                 UserPlace.objects.create(trip=user_trip, place=place)
                 return HttpResponseRedirect(reverse('front'))
-
-
