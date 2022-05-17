@@ -11,7 +11,7 @@ import os
 
 
 def index(request):
-    trips = Trip.objects.all().order_by("?")[:4]
+    trips = Trip.objects.all()
     # images = Image.objects.all().order_by("?")[:4]
     return render(request, 'trip/index.html', locals())
 

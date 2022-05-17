@@ -74,8 +74,6 @@
                                 <input id="radio-season-3" type="radio" name="season-group" value="Лето">
                                 <label for="radio-season-3">Лето</label>
                             </div>
-                        </div>
-                        <div class="group-items">
                             <div class="form_radio_btn">
                                 <input id="radio-season-4" type="radio" name="season-group" value="Осень">
                                 <label for="radio-season-4">Осень</label>
@@ -130,8 +128,6 @@
                                 <input id="radio-type-place-3" type="radio" name="type-place-group" value="Парки">
                                 <label for="radio-type-place-3">Парки</label>
                             </div>
-                        </div>
-                         <div class="group-items">
                             <div class="form_radio_btn">
                                 <input id="radio-type-place-4" type="radio" name="type-place-group" value="Горы">
                                 <label for="radio-type-place-4">Горы</label>
@@ -162,13 +158,9 @@
                                 <h5>{{ trip.title }}</h5>
                                 <div class="vertical-line"></div>
                                 <div class="description">
-                                    {% if trip.price %}
-                                    <small><img src="/static/img/trip/blue_money.png" alt=""> &nbsp;{{ trip.price }} ₽</small>
-                                    {% else %}
-                                        <small><img src="/static/img/trip/blue_money.png" alt=""> 0 ₽</small>
-                                    {% endif %}
+                                    <small><img src="/static/img/trip/blue_money.png" alt=""> {{ trip.price|default_if_none:"0" }} ₽</small>
                                     {% if trip.description %}
-                                    <h6>{{ trip.description|truncatewords:45 }}</h6>
+                                    <h6>{{ trip.description|default_if_none:""|truncatewords:45 }}</h6>
                                     {% else %}
                                         <h6>Описание тура отсутствует</h6>
                                     {% endif %}
@@ -180,7 +172,7 @@
                                 </a>
                                 {% if user.is_authenticated %}
                                 <div class="like">
-                                    {% if place.favouriteplace_set.count != 0 %}
+                                    {% if trip.favouritetrip_set.count != 0 %}
                                         <img onclick="CheckFavouriteTrip(this, {{ trip.id }})"
                                              src="/static/img/front/like-active.svg" alt=""
                                              height="40px">

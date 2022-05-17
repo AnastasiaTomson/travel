@@ -12,7 +12,7 @@ from django.http import JsonResponse
 
 def index(request):
     title = 'Каталог мест'
-    places = Place.objects.all().order_by("?")[:12]
+    places = Place.objects.all()
     user_trips = UserTrip.objects.all()
     user_trip_form = UserTripForm(request_user=request.user)
     return render(request, 'place/index.html', locals())

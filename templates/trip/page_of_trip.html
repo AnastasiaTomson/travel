@@ -39,20 +39,20 @@
                     <div>   <h2>{{ trip.title }}</h2></div>
                 </div>
                 <div class="action-bar">
-                    <a href="{% url 'place' %}" class="button">К другим турам &nbsp;<img src="/static/img/front/arrow.svg" alt=""></a>
+                    <a href="{% url 'trip' %}" class="button">К другим турам &nbsp;<img src="/static/img/front/arrow.svg" alt=""></a>
                     <div class="act-action">
                         <div class="like">
-                            {% if place.favouriteplace_set.count != 0 %}
-                                <img onclick="CheckFavouritePlace(this, {{ place.id }})"
+                            {% if trip.favouritetrip_set.count != 0 %}
+                                <img onclick="CheckFavouritePlace(this, {{ trip.id }})"
                                      src="/static/img/front/like-active.svg" alt=""
                                      height="40px">
                             {% else %}
-                                <img onclick="CheckFavouritePlace(this, {{ place.id }})"
+                                <img onclick="CheckFavouritePlace(this, {{ trip.id }})"
                                      src="/static/img/front/like.svg" alt="">
                             {% endif %}
                         </div>
                     {% if user.is_authenticated %}
-                            <div onclick="AddPlaceToTrip({{ place.id }})">
+                            <div {# onclick="AddPlaceToTrip({{ trip.id }})">#}>
                                 <img src="/static/img/front/add.png" alt="">
                             </div>
                     {% endif %}
