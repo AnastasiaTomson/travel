@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from travel import settings
 from slugify import slugify
+import os
 
 
 def index(request):
@@ -48,7 +49,11 @@ def pdf_trip(request, id):
 
 def html_to_pdf(request, id):
     import pdfkit
-    pdfkit.from_url(f'http://127.0.0.1:8000/trip/pdf/{id}', settings.MEDIA_ROOT + '/trip.pdf')
+    try:
+        config = pdfkit.configuration(wkhtmltopdf=r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe")
+        pdfkit.from_url(f'http://127.0.0.1:8000/trip/pdf/{id}', os.path.abspath('trip.pdf'), configuration=config)
+    except:
+        pdfkit.from_url(f'http://127.0.0.1:8000/trip/pdf/{id}', os.path.abspath('trip.pdf'))
     trip = UserTrip.objects.get(id=id)
     test_file = open(settings.MEDIA_ROOT + '/trip.pdf', 'rb')
     response = HttpResponse(content=test_file)
