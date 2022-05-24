@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import *
+from place.models import Season, City, TypePlace
 from django.views import View
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
@@ -12,7 +13,9 @@ import os
 
 def index(request):
     trips = Trip.objects.all()
-    # images = Image.objects.all().order_by("?")[:4]
+    seasons = Season.objects.all()
+    cities = City.objects.all()
+    type_places = TypePlace.objects.all()
     return render(request, 'trip/index.html', locals())
 
 
